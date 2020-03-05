@@ -53,7 +53,7 @@ export class EcrSync extends cdk.Construct {
 
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
       // buildDir: 'lib/lambda',
-      entry: '../lib/lambda/index.lambda.ts',
+      entry: './lib/lambda/index.lambda.ts',
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,
       memorySize: 256,
