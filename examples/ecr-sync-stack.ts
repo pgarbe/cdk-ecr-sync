@@ -1,0 +1,15 @@
+import * as cdk from '@aws-cdk/core';
+import { EcrSync } from '../lib';
+
+export class EcrSyncStack extends cdk.Stack {
+  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    // The code that defines your stack goes here
+    new EcrSync(this, 'ecrSync', {
+      dockerImages: [
+        { imageName: 'datadog/agent' }
+      ]
+    });
+  }
+}

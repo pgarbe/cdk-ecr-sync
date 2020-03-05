@@ -1,8 +1,18 @@
 *.js
 !jest.config.js
 *.d.ts
-node_modules
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+node_modules
+.cache
+.build
+
+.jsii
+coverage
+dist
+tsconfig.json
+tslint.json
+

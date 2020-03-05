@@ -1,28 +1,86 @@
 {
-  "name": "cdk-ecr-proxy",
-  "version": "0.1.0",
+  "name": "cdk-ecr-sync",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest"
+    "clean": "rimraf coverage dist pack doc 'lib/**/*.js' 'lib/**/*.d.ts' 'tst/**/*.js' 'tst/**/*.d.ts'",
+    "test": "jest",
+    "doc": "typedoc --excludeExternals --mode file --out doc lib/",
+    "build": "jsii",
+    "watch": "jsii -w",
+    "integ": "cdk-integ",
+    "package": "jsii-pacmak",
+    "cdk": "cdk",
+    "upload": "npm publish pack/js/* && python3 -m twine upload pack/python/*"
   },
+  "author": {
+    "name": "Philipp Garbe"
+  },
+  "awscdkio": {
+    "twitter": "pgarbe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pgarbe/cdk-ecr-sync"
+  },
+  "license": "Apache-2.0",
+  "jsii": {
+    "outdir": "pack",
+    "targets": {
+      "python": {
+        "distName": "cdk-ecr-sync",
+        "module": "cdk_ecr_sync"
+      }
+    }
+  },
+  "keywords": [
+    "cdk",
+    "aws-cdk",
+    "construct",
+    "aws",
+    "pgarbe",
+    "ecr"
+  ],
   "devDependencies": {
-    "@aws-cdk/assert": "1.26.0",
-    "@types/jest": "^24.0.22",
-    "@types/node": "10.17.5",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.1.0",
-    "typescript": "~3.7.2"
+    "@aws-cdk/assert": "^1.27.0",
+    "@aws-cdk/cloudformation-diff": "^1.27.0",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.7",
+    "@types/nodeunit": "0.0.30",
+    "jest": "^25.1.0",
+    "jsii": "^1.0.0",
+    "jsii-pacmak": "^1.0.0",
+    "nodeunit": "^0.11.3",
+    "npm-run-all": "^4.1.5",
+    "nyc": "^15.0.0",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.2.1",
+    "typedoc": "^0.16.11",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
-    "@aws-cdk/core": "1.26.0"
+    "@aws-cdk/core": "^1.27.0",
+    "@aws-cdk/aws-cloudformation": "^1.27.0",
+    "@aws-cdk/aws-lambda": "^1.27.0",
+    "@aws-cdk/aws-ecr": "^1.27.0",
+    "@aws-cdk/aws-ecs": "^1.27.0",
+    "@aws-cdk/aws-ssm": "^1.27.0",
+    "@aws-cdk/custom-resources": "^1.27.0",
+    "@aws-cdk/aws-codepipeline-actions": "^1.27.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.27.0",
+    "@aws-cdk/aws-iam": "^1.27.0"
   },
   "dependencies": {
-    "@aws-cdk/aws-sns": "1.26.0",
-    "@aws-cdk/aws-sns-subscriptions": "1.26.0",
-    "@aws-cdk/aws-sqs": "1.26.0",
-    "@aws-cdk/core": "1.26.0"
+    "@aws-cdk/aws-cloudformation": "^1.27.0",
+    "@aws-cdk/aws-codepipeline-actions": "^1.27.0",
+    "@aws-cdk/aws-ecs": "^1.27.0",
+    "@aws-cdk/aws-iam": "^1.27.0",
+    "@aws-cdk/aws-lambda": "^1.27.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.27.0",
+    "@aws-cdk/aws-ssm": "^1.27.0",
+    "@aws-cdk/core": "^1.27.0",
+    "@aws-cdk/custom-resources": "^1.27.0",
+    "parcel-bundler": "^1.12.4"
   }
 }
