@@ -20,8 +20,12 @@ jobs:
         with:
           fetch-depth: 1
 
+      - run: |
+          cd lib/lambda
+          npm install
+
       - name: Publish packages
-        uses: udondan/jsii-publish@v0.8.2
+        uses: udondan/jsii-publish@v0.8.3
         with:
           VERSION: ${{ steps.get_version.outputs.VERSION }}
           BUILD_SOURCE: true
