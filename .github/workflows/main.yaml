@@ -14,7 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - run: |
-        npm i -g recursive-install
-        npm-recursive-install
+        cd lib/lambda
+        npm install
+    - run: |
+        npm install
         npm run build
         npm run test
