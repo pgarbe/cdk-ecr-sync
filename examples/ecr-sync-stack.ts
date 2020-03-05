@@ -1,5 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import { EcrSync } from '../lib';
+// import { EcrSync } from '@pgarbe/cdk-ecr-sync';
 
 export class EcrSyncStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {

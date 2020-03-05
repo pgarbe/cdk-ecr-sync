@@ -16,8 +16,7 @@
   "license": "Apache-2.0",
   "jsii": {
     "outdir": "pack",
-    "targets": {
-    }
+    "targets": {}
   },
   "scripts": {
     "clean": "rm -rf cdk.out",
@@ -39,10 +38,12 @@
   },
   "dependencies": {
     "@aws-cdk/aws-lambda": "^1.27.0",
-    "@aws-cdk/core": "1.27.0"
+    "@aws-cdk/core": "1.27.0",
+    "@pgarbe/cdk-ecr-sync": "0.0.5"
   },
   "peerDependencies": {
     "@aws-cdk/aws-lambda": "^1.27.0",
-    "@aws-cdk/core": "1.27.0"
+    "@aws-cdk/core": "1.27.0",
+    "@pgarbe/cdk-ecr-sync": "0.0.5"
   }
 }
