@@ -6,3 +6,9 @@
 cdk.out
 
 node_modules
+
+# Exclude jsii outdir
+dist
+
+# Include .jsii
+!.jsii
