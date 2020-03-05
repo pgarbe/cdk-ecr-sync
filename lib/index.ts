@@ -65,8 +65,6 @@ export class EcrSync extends cdk.Construct {
       }
     });
     artifactsBucket.grantPut(lambda);
-    // TODO: cron-based trigger
-    // TODO: alarming
 
     props.dockerImages.forEach(element => {
       const repo = new ecr.Repository(this, element.imageName, {
