@@ -27,7 +27,7 @@
   },
   "license": "Apache-2.0",
   "jsii": {
-    "outdir": "pack",
+    "outdir": "dist",
     "targets": {
       "python": {
         "distName": "cdk-ecr-sync",
