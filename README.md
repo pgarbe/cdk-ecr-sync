@@ -1,6 +1,6 @@
 # CDK ECR Sync
 
-An CDK Construct which synchronizes Docker images from Docker Hub to ECR.
+An CDK Construct to synchronizes Docker images from Docker Hub to ECR.
 
 ![](https://github.com/pgarbe/cdk-ecr-sync/workflows/Build/badge.svg)
 
