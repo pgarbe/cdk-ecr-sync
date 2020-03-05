@@ -20,7 +20,8 @@ jobs:
         with:
           fetch-depth: 1
 
-      - run: |
+      - name: Install lambda dependencies
+        run: |
           cd lib/lambda
           npm install
 
@@ -31,5 +32,3 @@ jobs:
           BUILD_SOURCE: true
           BUILD_PACKAGES: true
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
