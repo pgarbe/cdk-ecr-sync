@@ -14,9 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - run: |
-        cd lib/lambda
-        npm install
-    - run: |
         npm install
         npm run build
         npm run test
