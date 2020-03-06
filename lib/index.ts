@@ -8,6 +8,7 @@ import * as s3 from '@aws-cdk/aws-s3';
 import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
 import path = require('path');
+import fs = require('fs');
 
 export interface Image {
 
@@ -52,8 +53,11 @@ export class EcrSync extends cdk.Construct {
       assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com')
     });
 
+    const lambaFile = path.resolve(__dirname) + '/index.get-image-tags-handler'
+    const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
+
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
-      entry: path.resolve(__dirname, '..', 'lambda-packages', 'get-image-tags-handler') + '/index.js',
+      entry: entry,
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,
       memorySize: 256,
