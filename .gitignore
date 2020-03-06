@@ -16,3 +16,4 @@ dist
 tsconfig.json
 tslint.json
 
+*.tgz

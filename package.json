@@ -8,12 +8,10 @@
     "clean": "rimraf coverage dist pack doc 'lib/**/*.js' 'lib/**/*.d.ts' 'tst/**/*.js' 'tst/**/*.d.ts'",
     "test": "jest",
     "doc": "typedoc --excludeExternals --mode file --out doc lib/",
-    "build": "jsii",
-    "watch": "jsii -w",
+    "build": "tsc",
+    "watch": "tsc -w",
     "integ": "cdk-integ",
-    "package": "jsii-pacmak",
     "cdk": "cdk",
-    "upload": "npm publish pack/js/* && python3 -m twine upload pack/python/*"
   },
   "author": {
     "name": "Philipp Garbe"
@@ -26,15 +24,6 @@
     "url": "https://github.com/pgarbe/cdk-ecr-sync"
   },
   "license": "Apache-2.0",
-  "jsii": {
-    "outdir": "dist",
-    "targets": {
-      "python": {
-        "distName": "cdk-ecr-sync",
-        "module": "cdk_ecr_sync"
-      }
-    }
-  },
   "keywords": [
     "cdk",
     "aws-cdk",
@@ -71,7 +60,9 @@
     "@aws-cdk/custom-resources": "^1.27.0",
     "@aws-cdk/aws-codepipeline-actions": "^1.27.0",
     "@aws-cdk/aws-lambda-nodejs": "^1.27.0",
-    "@aws-cdk/aws-iam": "^1.27.0"
+    "@aws-cdk/aws-iam": "^1.27.0",
+    "jszip": "^3.2.2",
+    "@types/jszip": "^3.1.7"
   },
   "dependencies": {
     "@aws-cdk/aws-cloudformation": "^1.27.0",
@@ -82,6 +73,9 @@
     "@aws-cdk/aws-lambda-nodejs": "^1.27.0",
     "@aws-cdk/aws-ssm": "^1.27.0",
     "@aws-cdk/core": "^1.27.0",
-    "@aws-cdk/custom-resources": "^1.27.0"
+    "@aws-cdk/custom-resources": "^1.27.0",
+    "aws-sdk": "^2.634.0",
+    "docker-hub-api": "^0.8.0",
+    "jszip": "^3.2.2"
   }
 }
