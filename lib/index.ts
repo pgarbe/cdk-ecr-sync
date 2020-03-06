@@ -7,6 +7,7 @@ import * as cpa from '@aws-cdk/aws-codepipeline-actions';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
+import path = require('path');
 
 export interface Image {
 
@@ -52,7 +53,7 @@ export class EcrSync extends cdk.Construct {
     });
 
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
-      entry: __dirname + '/lambda/index.lambda.ts',
+      entry: path.resolve(__dirname, '..', 'lambda-packages', 'get-image-tags-handler') + '/index.js',
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,
       memorySize: 256,
