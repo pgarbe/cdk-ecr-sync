@@ -20,13 +20,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      # - run: npm publish --access public
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      # - name: Publish packages
-      #   uses: udondan/jsii-publish@v0.8.3
-      #   with:
-      #     VERSION: ${{ steps.get_version.outputs.VERSION }}
-      #     BUILD_SOURCE: true
-      #     BUILD_PACKAGES: true
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: |
+          npm install
+          npm run build
+          npm run test
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
