@@ -39,14 +39,14 @@
   "dependencies": {
     "@aws-cdk/aws-lambda": "^1.27.0",
     "@aws-cdk/core": "1.27.0",
-    "@pgarbe/cdk-ecr-sync": "0.0.6",
+    "@pgarbe/cdk-ecr-sync": "0.0.7",
     "aws-sdk": "^2.634.0",
     "docker-hub-api": "^0.8.0"
   },
   "peerDependencies": {
     "@aws-cdk/aws-lambda": "^1.27.0",
     "@aws-cdk/core": "1.27.0",
-    "@pgarbe/cdk-ecr-sync": "0.0.6",
+    "@pgarbe/cdk-ecr-sync": "0.0.7",
     "docker-hub-api": "^0.8.0"
   }
 }

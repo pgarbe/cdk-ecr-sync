@@ -1,5 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as ecr from '@aws-cdk/aws-ecr';
+import * as evt from '@aws-cdk/aws-events';
+import * as trgt from '@aws-cdk/aws-events-targets'
 import * as iam from '@aws-cdk/aws-iam';
 import * as cb from '@aws-cdk/aws-codebuild';
 import * as cp from '@aws-cdk/aws-codepipeline';
@@ -9,22 +11,7 @@ import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
 import path = require('path');
 import fs = require('fs');
-
-export interface Image {
-
-  /**
-   * The name of the image that should be proxied by ECR
-   *
-   */
-  readonly imageName: string
-
-  /**
-   * Should the "latest" tag also included? Keep in mind that "latest" is not a version!
-   *
-   */
-  readonly includeLatest?: boolean
-  // Extend it by platforms / tag-prefix
-}
+import { Image } from './image';
 
 export interface EcrSyncProps {
 
@@ -34,7 +21,18 @@ export interface EcrSyncProps {
    */
   readonly dockerImages: Image[];
 
+  /**
+   * An ECR lifecycle rule which is applied to all repositories.
+   *
+   */
   readonly lifcecyleRule?: ecr.LifecycleRule;
+
+  /**
+   * Optional. Schedule when images should be synchronized.
+   *
+   * @default is once a day.
+   */
+  readonly schedule?: evt.Schedule;
 }
 
 export class EcrSync extends cdk.Construct {
@@ -56,6 +54,7 @@ export class EcrSync extends cdk.Construct {
     const lambaFile = path.resolve(__dirname) + '/index.get-image-tags-handler'
     const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
 
+
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
       entry: entry,
       timeout: cdk.Duration.minutes(10),
@@ -64,11 +63,16 @@ export class EcrSync extends cdk.Construct {
       environment: {
         'AWS_ACCOUNT_ID': cdk.Stack.of(this).account,
         'REGION': cdk.Stack.of(this).region,
-        'IMAGES': props.dockerImages.map(i => i.imageName).join(','),
+        'IMAGES': JSON.stringify(props.dockerImages),
         'BUCKET_NAME': artifactsBucket.bucketName
       }
     });
     artifactsBucket.grantPut(lambda);
+
+    new evt.Rule(this, 'ScheduleGetImageTags', {
+      targets: [new trgt.LambdaFunction(lambda)],
+      schedule: props.schedule ?? evt.Schedule.rate(cdk.Duration.days(1)),
+    });
 
     props.dockerImages.forEach(element => {
       const repo = new ecr.Repository(this, element.imageName, {

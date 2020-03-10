@@ -17,8 +17,5 @@ new EcrSync(this, 'ecrSync', {
 See also `examples` folder.
 
 ## Next ideas
-- [ ] Build and publish with GitHub actions
 - [ ] Have pagination for DockerHub image tags
-- [ ] Implement `includeLatest` property
-- [ ] Option to define schedule when sync should happen
 - [ ] Options to provide CloudWatch alarms
