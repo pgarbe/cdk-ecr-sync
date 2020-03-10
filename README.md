@@ -8,9 +8,10 @@ An CDK Construct to synchronizes Docker images from Docker Hub to ECR.
 
 ```typescript
 new EcrSync(this, 'ecrSync', {
-    dockerImages: [
-        { imageName: 'datadog/agent' }
-    ]
+  dockerImages: [
+    { imageName: 'datadog/agent' }
+  ],
+  lifcecyleRule: {...} // Optional lifecycle rule for ECR repos
 });
 ```
 

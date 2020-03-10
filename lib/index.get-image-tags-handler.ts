@@ -31,14 +31,15 @@ export async function handler(): Promise<void> {
     }
 
     missingImageTags.forEach(t => {
-      buildTriggerFile += `${image},${accountId}.dkr.ecr.${region}.amazonaws.com/${image},${t}\n`;
+      buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t}\n`;
     });
   }));
 
-  console.log(`Uploading:\n${buildTriggerFile}`);
+  console.log(`Images to sync:\n${buildTriggerFile}`);
+
+  if (buildTriggerFile === "") return;
 
   const stream = await zipToFileStream(buildTriggerFile);
-
   await uploadToS3(env['BUCKET_NAME']!, 'images.zip', stream);
 }
 
