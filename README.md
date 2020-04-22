@@ -16,3 +16,13 @@ new EcrSync(this, 'ecrSync', {
 ```
 
 See also `examples` folder.
+
+
+## How to release
+
+Set a new version with `npm version` command and push changes to GitHub.
+
+```
+npm version x.x.x
+git push
+```
