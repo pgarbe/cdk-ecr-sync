@@ -16,7 +16,3 @@ new EcrSync(this, 'ecrSync', {
 ```
 
 See also `examples` folder.
-
-## Next ideas
-- [ ] Have pagination for DockerHub image tags
-- [ ] Options to provide CloudWatch alarms

@@ -5,6 +5,8 @@ import { Stream, PassThrough } from 'stream';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import { Request, AWSError } from 'aws-sdk';
 import { Image } from './image';
+import { request, RequestOptions } from 'https';
+import { URL } from 'url';
 
 const ecr = new aws.ECR();
 
@@ -93,41 +95,60 @@ async function getEcrImageTags(image: string): Promise<ImageIdentifierList> {
   return imageList;
 }
 
-async function getDockerImageTags(image: string): Promise<string[]> {
+export async function getDockerImageTags(image: string): Promise<string[]> {
 
-  const page_size = 50;
-  const dockerHubAPI = require('docker-hub-api');
-  const tags: any = await dockerHubAPI.tags('', image, { perPage: page_size });
+  const pageSize = 100;
+  let url = new URL(`https://hub.docker.com/v2/repositories/${image}/tags?page_size=${pageSize}`);
 
-  console.debug(tags);
+  let results: tagResult[] = [];
+  let response: tagsResponse;
 
-  if (isTagsResult(tags)) {
-    return (tags as tagsResult[]).map(x => x.name);
-  } else {
-    return (tags as tagsResponse).results.map(x => x.name);
-  }
-  // const total = tags.count;
-  // let page = 1;
+  do {
+    response = await performRequest({
+      host: url.host,
+      path: url.pathname + url.search,
+      method: 'GET',
+    }) as tagsResponse;
 
-  // while (total > page * page_size)
+    results.push(...response.results);
 
-  // {
-  //   count: 511,
-  //   next: 'https://hub.docker.com/v2/repositories/datadog/agent/tags?page=2&page_size=2',
-  //   previous: null,
-  //   results: [ [Object], [Object] ]
-  // }
+    if (response.next !== null) {
+      url = new URL(response.next)
+    }
+  } while (response !== undefined && response.next !== null) 
 
+  return results.map(x => x.name);
 }
 
-function isTagsResult(_toBeDetermined: any): _toBeDetermined is tagsResult[] { return true; } 
-
-interface tagsResponse {
-  count: number,
-  next: string,
-  results: tagsResult[]
-}
-
-interface tagsResult {
+interface tagResult {
   name: string
+}
+interface tagsResponse {
+  next: string
+  results: tagResult[]
+}
+
+function performRequest(options: RequestOptions) {
+  return new Promise((resolve, reject) => {
+    request(
+      options,
+      function(response) {
+        const { statusCode } = response;
+        if (statusCode === undefined || statusCode >= 300) {
+          reject(
+            new Error(response.statusMessage)
+          )
+        }
+        const chunks: any[] = [];
+        response.on('data', (chunk) => {
+          chunks.push(chunk);
+        });
+        response.on('end', () => {
+          const result = Buffer.concat(chunks).toString();
+          resolve(JSON.parse(result));
+        });
+      }
+    )
+      .end();
+  })
 }
