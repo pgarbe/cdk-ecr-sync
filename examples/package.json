@@ -26,25 +26,25 @@
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.36.0",
-    "@types/jest": "^25.2.1",
-    "aws-cdk": "1.36.0",
-    "jest": "^25.5.0",
-    "jsii": "^1.4.1",
-    "jsii-pacmak": "^1.4.1",
-    "ts-jest": "^25.4.0",
-    "ts-node": "^8.9.1",
-    "typescript": "~3.8.3"
+    "@aws-cdk/assert": "1.38.0",
+    "@types/jest": "^25.2.2",
+    "aws-cdk": "1.38.0",
+    "jest": "^26.0.1",
+    "jsii": "^1.5.0",
+    "jsii-pacmak": "^1.5.0",
+    "ts-jest": "^25.5.1",
+    "ts-node": "^8.10.1",
+    "typescript": "~3.9.2"
   },
   "dependencies": {
-    "@aws-cdk/aws-lambda": "^1.36.0",
-    "@aws-cdk/core": "1.36.0",
+    "@aws-cdk/aws-lambda": "^1.38.0",
+    "@aws-cdk/core": "1.38.0",
     "@pgarbe/cdk-ecr-sync": "0.2.0",
-    "aws-sdk": "^2.665.0"
+    "aws-sdk": "^2.675.0"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-lambda": "^1.36.0",
-    "@aws-cdk/core": "1.36.0",
+    "@aws-cdk/aws-lambda": "^1.38.0",
+    "@aws-cdk/core": "1.38.0",
     "@pgarbe/cdk-ecr-sync": "0.2.0"
   }
 }

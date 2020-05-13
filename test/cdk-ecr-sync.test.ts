@@ -66,17 +66,3 @@ test('IncludeLatest is included when it is set to true', () => {
   }));
 });
 
-// test('Sends alerts to given SNS topic', () => {
-//     const app = new cdk.App();
-//     const stack = new cdk.Stack(app, "TestStack");
-
-//     // WHEN
-//     const topic = new sns.Topic(stack, 'AlarmTopic');
-//     const sync = new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'datadog/agent' }] });
-//     sync.sendAlarmsTo(topic)
-
-//     // THEN
-//     expectCDK(stack).to(haveResource("AWS::ECR::Repository", {
-//         RepositoryName: 'datadog/agent'
-//     }));
-// });
