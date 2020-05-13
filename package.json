@@ -36,7 +36,7 @@
     "@aws-cdk/assert": "^1.36.0",
     "@aws-cdk/cloudformation-diff": "^1.36.0",
     "@types/jest": "^25.2.1",
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.0.1",
     "@types/nodeunit": "0.0.30",
     "jest": "^25.4.0",
     "jsii": "^1.4.1",
