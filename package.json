@@ -46,7 +46,7 @@
     "nyc": "^15.0.1",
     "parcel-bundler": "^1.12.4",
     "rimraf": "^3.0.2",
-    "ts-jest": "^25.5.1",
+    "ts-jest": "^26.0.0",
     "typedoc": "^0.17.6",
     "typescript": "^3.9.2"
   },
