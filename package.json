@@ -1,6 +1,6 @@
 {
   "name": "@pgarbe/cdk-ecr-sync",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An CDK Construct to synchronizes Docker images from Docker Hub to ECR.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
