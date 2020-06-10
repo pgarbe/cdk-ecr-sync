@@ -35,7 +35,7 @@
   "devDependencies": {
     "@aws-cdk/assert": "^1.44.0",
     "@aws-cdk/cloudformation-diff": "^1.44.0",
-    "@types/jest": "^25.2.3",
+    "@types/jest": "^26.0.0",
     "@types/node": "^14.0.10",
     "@types/nodeunit": "0.0.31",
     "jest": "^26.0.1",
