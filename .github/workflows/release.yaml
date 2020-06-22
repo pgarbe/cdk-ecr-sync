@@ -24,5 +24,6 @@ jobs:
           npm install
           npm run build
           npm run test
+          npm run awslint
           echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
           npm publish

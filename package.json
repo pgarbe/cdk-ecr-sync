@@ -6,12 +6,13 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "clean": "rimraf coverage dist pack doc 'lib/**/*.js' 'lib/**/*.d.ts' 'tst/**/*.js' 'tst/**/*.d.ts'",
-    "test": "jest",
+    "test": "jest && awslint",
     "doc": "typedoc --excludeExternals --mode file --out doc lib/",
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "jsii",
+    "watch": "jsii -w",
     "integ": "cdk-integ",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "awslint": "awslint"
   },
   "author": {
     "name": "Philipp Garbe"
@@ -24,6 +25,15 @@
     "url": "https://github.com/pgarbe/cdk-ecr-sync"
   },
   "license": "Apache-2.0",
+  "jsii": {
+    "outdir": "pack",
+    "targets": {
+      "python": {
+        "distName": "cdk-ecr-sync",
+        "module": "cdk_ecr_sync"
+      }
+    }
+  },
   "keywords": [
     "cdk",
     "aws-cdk",
@@ -38,6 +48,7 @@
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.10",
     "@types/nodeunit": "0.0.31",
+    "awslint": "^1.46.0",
     "jest": "^26.0.1",
     "jsii": "^1.6.0",
     "jsii-pacmak": "^1.6.0",
@@ -61,8 +72,9 @@
     "@aws-cdk/aws-codepipeline-actions": "^1.44.0",
     "@aws-cdk/aws-lambda-nodejs": "^1.44.0",
     "@aws-cdk/aws-iam": "^1.44.0",
-    "jszip": "^3.4.0",
-    "@types/jszip": "^3.4.1"
+    "@aws-cdk/aws-events": "^1.44.0",
+    "@aws-cdk/aws-events-targets": "^1.44.0",
+    "constructs": "^3.0.3"
   },
   "dependencies": {
     "@aws-cdk/aws-cloudformation": "^1.44.0",
@@ -78,5 +90,9 @@
     "@aws-cdk/custom-resources": "^1.44.0",
     "aws-sdk": "^2.690.0",
     "jszip": "^3.4.0"
-  }
+  },
+  "bundledDependencies": [
+    "aws-sdk",
+    "jszip"
+  ]
 }
