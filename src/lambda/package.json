@@ -1,6 +1,5 @@
 {
-  "dependencies": {
-  },
+  "dependencies": {},
   "targets": {
     "cdk-lambda": {
       "context": "node",
