@@ -1,6 +1,10 @@
 const { ConstructLibraryAws, Semver } = require('projen');
 
+const LAST_AWSCDK_VERSION = '1.61.1';
+const LAST_PROJEN_VERSION = '0.3.47';
+
 const project = new ConstructLibraryAws({
+  projenVersion: LAST_PROJEN_VERSION,
   name: '@pgarbe/cdk-ecr-sync',
   description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
   jsiiVersion: Semver.caret('1.12.0'),
@@ -19,7 +23,7 @@ const project = new ConstructLibraryAws({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '1.61.0',
+  cdkVersion: LAST_AWSCDK_VERSION,
   cdkDependencies: [
     "@aws-cdk/aws-cloudformation",
     "@aws-cdk/aws-codebuild",
