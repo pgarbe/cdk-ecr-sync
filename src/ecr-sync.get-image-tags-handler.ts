@@ -16,7 +16,7 @@ export async function handler(): Promise<void> {
   const region = env['REGION'];
 
   let buildTriggerFile: string = '';
-  const images: Image[] = JSON.parse(env['IMAGES'] ?? "[]");
+  const images: Image[] = JSON.parse(env['IMAGES'] ?? '[]');
 
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
@@ -39,7 +39,7 @@ export async function handler(): Promise<void> {
 
   console.log(`Images to sync:\n${buildTriggerFile}`);
 
-  if (buildTriggerFile === "") return;
+  if (buildTriggerFile === '') return;
 
   const stream = await zipToFileStream(buildTriggerFile);
   await uploadToS3(env['BUCKET_NAME']!, 'images.zip', stream);
@@ -58,17 +58,18 @@ async function uploadToS3(bucket: string, key: string, stream: PassThrough) {
 
   return new aws.S3().upload(params, (error: Error): void => {
     if (error) {
-        console.error(`Got error creating stream to s3 ${error.name} ${error.message} ${error.stack}`);
-        throw error;
+      console.error(`Got error creating stream to s3 ${error.name} ${error.message} ${error.stack}`);
+      throw error;
     }
   }).promise();
 }
 
 async function zipToFileStream(content: string): Promise<PassThrough> {
-  var JSZip = require("jszip");
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  var JSZip = require('jszip');
   var zip = new JSZip();
 
-  zip.file("images.csv", content);
+  zip.file('images.csv', content);
 
   const streamPassThrough = new Stream.PassThrough();
   await zip.generateNodeStream({type:'nodebuffer',streamFiles:true}).pipe(streamPassThrough);
@@ -136,7 +137,7 @@ function performRequest(options: RequestOptions) {
         const { statusCode } = response;
         if (statusCode === undefined || statusCode >= 300) {
           reject(
-            new Error(response.statusMessage)
+            new Error(response.statusMessage),
           )
         }
         const chunks: any[] = [];
@@ -147,7 +148,7 @@ function performRequest(options: RequestOptions) {
           const result = Buffer.concat(chunks).toString();
           resolve(JSON.parse(result));
         });
-      }
+      },
     )
       .end();
   })

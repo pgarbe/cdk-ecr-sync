@@ -1,68 +1,67 @@
-import { expect as expectCDK, haveResource } from '@aws-cdk/assert';
+import { expect as expectCDK, haveResource, haveResourceLike } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-// import * as sns from '@aws-cdk/aws-sns';
-import EcrSync = require('../lib/index');
+import * as EcrSync from '../src/index';
 
 test('Defaults are correctly set', () => {
-    const app = new cdk.App();
-    const stack = new cdk.Stack(app, "TestStack");
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'TestStack');
 
-    // WHEN
-    new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar' }] });
+  // WHEN
+  new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar' }] });
 
-    // THEN
-    // Repository is created
-    expectCDK(stack).to(haveResource("AWS::ECR::Repository", {
-        RepositoryName: 'foo/bar'
-    }));
+  // THEN
+  // Repository is created
+  expectCDK(stack).to(haveResource('AWS::ECR::Repository', {
+    RepositoryName: 'foo/bar',
+  }));
 
-    // Rule is set
-    expectCDK(stack).to(haveResource("AWS::Events::Rule", {
-      ScheduleExpression: "rate(1 day)"
-    }));
+  // Rule is set
+  expectCDK(stack).to(haveResource('AWS::Events::Rule', {
+    ScheduleExpression: 'rate(1 day)',
+  }));
 
-    // includeLatest is not set
-    expectCDK(stack).to(haveResource("AWS::Lambda::Function", {
-      "Environment": {
-        "Variables": {
-          "AWS_ACCOUNT_ID": {
-            "Ref": "AWS::AccountId"
-          },
-          "REGION": {
-            "Ref": "AWS::Region"
-          },
-          "IMAGES": "[{\"imageName\":\"foo/bar\"}]",
-          "BUCKET_NAME": {
-            "Ref": "MyTestConstructArtifactBucket864F78F1"
-          }
-        }
-      }
-    }));    
-  });
+  // includeLatest is not set
+  expectCDK(stack).to(haveResourceLike('AWS::Lambda::Function', {
+    Environment: {
+      Variables: {
+        AWS_ACCOUNT_ID: {
+          Ref: 'AWS::AccountId',
+        },
+        REGION: {
+          Ref: 'AWS::Region',
+        },
+        IMAGES: '[{"imageName":"foo/bar"}]',
+        BUCKET_NAME: {
+          Ref: 'MyTestConstructArtifactBucket864F78F1',
+        },
+      },
+    },
+  }));    
+});
 
 test('IncludeLatest is included when it is set to true', () => {
   const app = new cdk.App();
-  const stack = new cdk.Stack(app, "TestStack");
+  const stack = new cdk.Stack(app, 'TestStack');
 
   // WHEN
   new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', includeLatest: true}] });
 
   // THEN
-  expectCDK(stack).to(haveResource("AWS::Lambda::Function", {
-    "Environment": {
-      "Variables": {
-        "AWS_ACCOUNT_ID": {
-          "Ref": "AWS::AccountId"
+  expectCDK(stack).to(haveResourceLike('AWS::Lambda::Function', {
+    Environment: {
+      Variables: {
+        AWS_ACCOUNT_ID: {
+          Ref: 'AWS::AccountId',
         },
-        "REGION": {
-          "Ref": "AWS::Region"
+        REGION: {
+          Ref: 'AWS::Region',
         },
-        "IMAGES": "[{\"imageName\":\"foo/bar\",\"includeLatest\":true}]",
-        "BUCKET_NAME": {
-          "Ref": "MyTestConstructArtifactBucket864F78F1"
-        }
-      }
-    }
+        IMAGES: '[{"imageName":"foo/bar","includeLatest":true}]',
+        BUCKET_NAME: {
+          Ref: 'MyTestConstructArtifactBucket864F78F1',
+        },
+      },
+    },
   }));
 });
 

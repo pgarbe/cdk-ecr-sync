@@ -9,8 +9,6 @@ import * as cpa from '@aws-cdk/aws-codepipeline-actions';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
-import path = require('path');
-import fs = require('fs');
 import { Image } from './image';
 
 /**
@@ -55,24 +53,19 @@ export class EcrSync extends cdk.Construct {
     });
 
     const buildRole = new iam.Role(this, 'buildRole', {
-      assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com')
+      assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
     });
 
-    const lambaFile = path.resolve(__dirname) + '/index.get-image-tags-handler'
-    const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
-
-
-    const lambda = new lnjs.NodejsFunction(this, 'lambda', {
-      entry: entry,
+    const lambda = new lnjs.NodejsFunction(this, 'get-image-tags-handler', {
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,
       memorySize: 256,
       environment: {
-        'AWS_ACCOUNT_ID': cdk.Stack.of(this).account,
-        'REGION': cdk.Stack.of(this).region,
-        'IMAGES': JSON.stringify(props.dockerImages),
-        'BUCKET_NAME': artifactsBucket.bucketName
-      }
+        AWS_ACCOUNT_ID: cdk.Stack.of(this).account,
+        REGION: cdk.Stack.of(this).region,
+        IMAGES: JSON.stringify(props.dockerImages),
+        BUCKET_NAME: artifactsBucket.bucketName,
+      },
     });
     artifactsBucket.grantPut(lambda);
 
@@ -90,7 +83,7 @@ export class EcrSync extends cdk.Construct {
       lambda.addToRolePolicy(new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: ['ecr:ListImages'],
-        resources: [repo.repositoryArn]
+        resources: [repo.repositoryArn],
       }));
 
       if (props.lifcecyleRule !== undefined) {
@@ -115,15 +108,15 @@ export class EcrSync extends cdk.Construct {
         phases: {
           install: {
             'runtime-versions': {
-              'docker': 18
+              docker: 18,
             },
-            commands:[
+            'commands':[
               'aws --version',
               'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"',
               'unzip -q awscliv2.zip',
               './aws/install',
-              'aws --version'
-            ]
+              'aws --version',
+            ],
           },
           build: {
             commands:[
@@ -135,10 +128,10 @@ export class EcrSync extends cdk.Construct {
                   docker tag $dockerImage:$tag $ecrImage:$tag\n \
                   aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com\n \
                   docker push $ecrImage:$tag\n \
-                done < images.csv\n'
-            ]
-          }
-        }
+                done < images.csv\n',
+            ],
+          },
+        },
       }),
       role: buildRole,
       // cache: cb.Cache.bucket(artifactsBucket, {prefix: 'cache/'}),
@@ -146,23 +139,23 @@ export class EcrSync extends cdk.Construct {
         privileged: true,
         buildImage: cb.LinuxBuildImage.AMAZON_LINUX_2,
         environmentVariables: {
-          "AWS_ACCOUNT_ID": { value: cdk.Stack.of(this).account }
-        }
+          AWS_ACCOUNT_ID: { value: cdk.Stack.of(this).account },
+        },
       },
     });
 
     const buildAction = new cpa.CodeBuildAction({
       actionName: 'Build',
       input: triggerStageArtifact,
-      project: buildSpecBuild
+      project: buildSpecBuild,
     });
 
     new cp.Pipeline(this, 'PullPushPipeline', {
       artifactBucket: artifactsBucket,
       stages: [
         { stageName: 'Trigger', actions: [triggerAction] },
-        { stageName: 'PullPush', actions: [buildAction] }
-      ]
+        { stageName: 'PullPush', actions: [buildAction] },
+      ],
     });
   }
 

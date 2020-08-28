@@ -1,5 +1,5 @@
 import * as cdk from '@aws-cdk/core';
-import { EcrSync } from '../lib';
+import { EcrSync } from '../src';
 import { Duration } from '@aws-cdk/core';
 // import { EcrSync } from '@pgarbe/cdk-ecr-sync';
 
@@ -10,11 +10,11 @@ export class EcrSyncStack extends cdk.Stack {
     // The code that defines your stack goes here
     new EcrSync(this, 'ecrSync', {
       dockerImages: [
-        { imageName: 'datadog/agent' }
+        { imageName: 'datadog/agent' },
       ],
       lifcecyleRule: {
-        maxImageAge: Duration.days(365)  
-      }
+        maxImageAge: Duration.days(365),  
+      },
     });
   }
 }
