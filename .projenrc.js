@@ -14,6 +14,8 @@ const project = new ConstructLibraryAws({
     "ecr"
   ],
 
+  releaseEveryCommit: false,
+
   catalog: {
     twitter: 'pgarbe'
   },
@@ -43,14 +45,6 @@ const project = new ConstructLibraryAws({
   devDependencies: {
     'pre-commit': Semver.caret('1.2.2')
   },
-  dependencies: {
-    "aws-sdk": Semver.caret("2.708.0"),
-    'jszip': Semver.caret("3.5.0")
-  },
-  bundledDependencies: [
-    'aws-sdk',
-    'jszip'
-  ]
   // jsii publishing
 
   // java: {
@@ -64,5 +58,6 @@ const project = new ConstructLibraryAws({
   // }
 });
 
+project.jest.config.time
 project.gitignore.exclude('.parcel-cache');
 project.synth();
