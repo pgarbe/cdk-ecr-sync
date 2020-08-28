@@ -58,14 +58,10 @@ export class EcrSync extends cdk.Construct {
       assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
     });
 
-    const nodepath = `${path.resolve(__dirname)}/..`
-    console.log(nodepath)
-    const isPackage = path.dirname(nodepath) === 'node_modules';
-    console.log(isPackage)
+    const isInstalledAsPackage = path.dirname(`${path.resolve(__dirname)}/..`) === 'node_modules';
 
-    const lambaFile = `${path.resolve(__dirname)}/lambda/get-image-tags-handler`
-    // const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
-    const entry = lambaFile + (isPackage ? '.js' : '.ts');
+    // const lambaFile = `${path.resolve(__dirname)}/src/lambda/get-image-tags-handler`
+    const entry = 'src/lambda/get-image-tags-handler' + (isInstalledAsPackage ? '.js' : '.ts');
     console.log(entry);
 
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
