@@ -1,9 +1,13 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as aws from 'aws-sdk';
-import { env } from 'process';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { ImageIdentifierList, ListImagesResponse } from 'aws-sdk/clients/ecr';
-import { Stream, PassThrough } from 'stream';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Request, AWSError } from 'aws-sdk';
+import { env } from 'process';
+import { Stream, PassThrough } from 'stream';
 import { Image } from '../image';
 import { request, RequestOptions } from 'https';
 import { URL } from 'url';
@@ -65,7 +69,7 @@ async function uploadToS3(bucket: string, key: string, stream: PassThrough) {
 }
 
 async function zipToFileStream(content: string): Promise<PassThrough> {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // eslint-disable-next-line @typescript-eslint/no-require-imports,import/no-extraneous-dependencies
   var JSZip = require('jszip');
   var zip = new JSZip();
 

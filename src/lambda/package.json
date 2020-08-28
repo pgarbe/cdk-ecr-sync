@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "aws-sdk": "^2.741.0",
-    "jszip": "^3.5.0"
   },
   "targets": {
     "cdk-lambda": {
