@@ -4,7 +4,7 @@ import { ImageIdentifierList, ListImagesResponse } from 'aws-sdk/clients/ecr';
 import { Stream, PassThrough } from 'stream';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import { Request, AWSError } from 'aws-sdk';
-import { Image } from './image';
+import { Image } from '../image';
 import { request, RequestOptions } from 'https';
 import { URL } from 'url';
 

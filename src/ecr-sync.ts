@@ -58,10 +58,10 @@ export class EcrSync extends cdk.Construct {
       assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
     });
 
-    const lambaFile = path.resolve(__dirname) + '/ecr-sync.get-image-tags-handler'
+    const lambaFile = `${path.resolve(__dirname)}/lambda/get-image-tags-handler`
     const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
 
-    const lambda = new lnjs.NodejsFunction(this, 'get-image-tags-handler', {
+    const lambda = new lnjs.NodejsFunction(this, 'lambda', {
       entry: entry,
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,

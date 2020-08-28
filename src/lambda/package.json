@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.741.0",
+    "jszip": "^3.5.0"
+  },
+  "targets": {
+    "cdk-lambda": {
+      "context": "node",
+      "includeNodeModules": {
+        "aws-sdk": false
+      },
+      "sourceMap": false,
+      "minify": false,
+      "engines": {
+        "node": ">= 12"
+      }
+    }
+  }
+}
