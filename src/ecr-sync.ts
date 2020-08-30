@@ -63,7 +63,7 @@ export class EcrSync extends cdk.Construct {
     // const lambaFile = `${path.resolve(__dirname)}/src/lambda/get-image-tags-handler`
     // const entry = 'src/lambda/get-image-tags-handler' + (isInstalledAsPackage ? '.js' : '.ts');
 
-    const lambaFile = `${path.resolve(__dirname)}/lambda/get-image-tags-handler`
+    const lambaFile = `${path.resolve(__dirname)}/lambda/get-image-tags-handler`;
     const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
     console.log(entry);
 
