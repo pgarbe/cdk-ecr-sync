@@ -16,6 +16,7 @@ const project = new ConstructLibraryAws({
   ],
 
   releaseEveryCommit: false,
+  antitamper: false,
 
   catalog: {
     twitter: 'pgarbe'

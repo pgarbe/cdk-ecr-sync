@@ -14,14 +14,10 @@ jobs:
           node-version: 10.17.0
       - run: npx projen@0.3.47
       - run: yarn install --frozen-lockfile
-      - name: Anti-tamper check
-        run: git diff --exit-code
       - name: Set git identity
         run: |-
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
       - run: yarn build
-      - name: Anti-tamper check
-        run: git diff --exit-code
     container:
       image: jsii/superchain
