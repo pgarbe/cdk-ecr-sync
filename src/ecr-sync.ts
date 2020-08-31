@@ -10,7 +10,7 @@ import * as s3 from '@aws-cdk/aws-s3';
 import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
 import * as path from 'path';
-// import * as fs from 'fs';
+import * as fs from 'fs';
 import { Image } from './image';
 
 /**
@@ -58,11 +58,11 @@ export class EcrSync extends cdk.Construct {
       assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
     });
 
-    const isInstalledAsPackage = path.dirname(`${path.resolve(__dirname)}/..`) === 'node_modules';
-    const entry = 'src/lambda/get-image-tags-handler' + (isInstalledAsPackage ? '.js' : '.ts');
+    // const isInstalledAsPackage = path.dirname(`${path.resolve(__dirname)}/..`) === 'node_modules';
+    // const entry = path.resolve(__dirname) + '/src/lambda/get-image-tags-handler' + (isInstalledAsPackage ? '.js' : '.ts');
 
-    // const lambaFile = `${path.resolve(__dirname)}/lambda/get-image-tags-handler`;
-    // const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
+    const lambaFile = `${path.resolve(__dirname)}/lambda/get-image-tags-handler`;
+    const entry = lambaFile + (fs.existsSync(`${lambaFile}.ts`) ? '.ts' : '.js');
     console.log(entry);
 
     // const rel = path.relative(__dirname, entry);

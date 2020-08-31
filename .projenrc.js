@@ -45,6 +45,7 @@ const project = new ConstructLibraryAws({
     "@aws-cdk/custom-resources",
   ],
   devDependencies: {
+    'parcel': Semver.pinned('2.0.0-beta.1'),
     'pre-commit': Semver.caret('1.2.2')
   },
   dependencies: {
