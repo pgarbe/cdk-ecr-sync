@@ -15,8 +15,7 @@ const project = new ConstructLibraryAws({
     "ecr"
   ],
 
-  releaseEveryCommit: false,
-  antitamper: false,
+  releaseEveryCommit: true,
 
   catalog: {
     twitter: 'pgarbe'
