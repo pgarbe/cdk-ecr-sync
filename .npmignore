@@ -12,6 +12,7 @@ dist
 /tsconfig.jest.json
 /coverage
 /test
+examples
 !/lib
 !/lib/**/*.js
 !/lib/**/*.d.ts
