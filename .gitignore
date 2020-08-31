@@ -41,6 +41,7 @@ jspm_packages/
 .jsii
 tsconfig.json
 .parcel-cache
+cdk.out
 !/package.json
 !/.npmignore
 !/LICENSE

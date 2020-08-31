@@ -72,4 +72,5 @@ const project = new ConstructLibraryAws({
 
 project.jest.config.time
 project.gitignore.exclude('.parcel-cache');
+project.gitignore.exclude('cdk.out');
 project.synth();

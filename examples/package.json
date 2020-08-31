@@ -40,7 +40,7 @@
     "@aws-cdk/aws-lambda": "^1.61.1",
     "@aws-cdk/core": "1.61.1",
     "@pgarbe/cdk-ecr-sync": "0.3.0",
-    "aws-sdk": "^2.741.0"
+    "aws-sdk": "^2.743.0"
   },
   "peerDependencies": {
     "@aws-cdk/aws-lambda": "^1.61.1",
