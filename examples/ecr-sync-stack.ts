@@ -1,7 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import { Duration } from '@aws-cdk/core';
-import { EcrSync } from '@pgarbe/cdk-ecr-sync';
-// import { EcrSync } from '../src';
+// import { EcrSync } from '@pgarbe/cdk-ecr-sync';
+import { EcrSync } from '../src';
 
 export class EcrSyncStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
