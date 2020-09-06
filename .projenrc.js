@@ -6,7 +6,6 @@ const project = new ConstructLibraryAws({
   name: '@pgarbe/cdk-ecr-sync',
   description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
   jsiiVersion: Semver.caret('1.12.0'),
-  projenVersion: Semver.pinned('0.3.47'),
   authorName: 'Philipp Garbe',
   authorUrl: 'https://garbe.io',
   repository: 'https://github.com/pgarbe/cdk-ecr-sync.git',
@@ -15,7 +14,7 @@ const project = new ConstructLibraryAws({
     "ecr"
   ],
 
-  releaseEveryCommit: true,
+  releaseEveryCommit: false,
 
   catalog: {
     twitter: 'pgarbe'
