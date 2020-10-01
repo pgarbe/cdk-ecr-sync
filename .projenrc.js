@@ -1,6 +1,6 @@
 const { ConstructLibraryAws, Semver } = require('projen');
 
-const LAST_AWSCDK_VERSION = '1.61.1';
+const LAST_AWSCDK_VERSION = '1.65.0';
 
 const project = new ConstructLibraryAws({
   name: '@pgarbe/cdk-ecr-sync',
