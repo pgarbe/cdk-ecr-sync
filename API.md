@@ -83,7 +83,9 @@ Properties of a EcrSync image.
 Name | Type | Description 
 -----|------|-------------
 **imageName** | <code>string</code> | The name of the image that should be proxied by ECR.
+**excludeTags**? | <code>string</code> | A regular expression which tags should be included.<br/>__*Default*__: Empty. No tags are excluded
 **includeLatest**? | <code>boolean</code> | Should the "latest" tag also included?<br/>__*Default*__: false
+**includeTags**? | <code>string</code> | A regular expression which tags should be included.<br/>__*Default*__: Emtpy. All tags are included
 
 
 
