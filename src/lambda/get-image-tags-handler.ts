@@ -103,6 +103,11 @@ async function getEcrImageTags(image: string): Promise<ImageIdentifierList> {
 export async function getDockerImageTags(image: string): Promise<string[]> {
 
   const pageSize = 100;
+
+  if (!image.includes('/')) {
+    image = 'library/' + image;
+  }
+
   let url = new URL(`https://hub.docker.com/v2/repositories/${image}/tags?page_size=${pageSize}`);
 
   let results: tagResult[] = [];
