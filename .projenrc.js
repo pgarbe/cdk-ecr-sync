@@ -1,8 +1,8 @@
-const { ConstructLibraryAws, Semver } = require('projen');
+const { AwsCdkConstructLibrary, Semver } = require('projen');
 
 const LAST_AWSCDK_VERSION = '1.65.0';
 
-const project = new ConstructLibraryAws({
+const project = new AwsCdkConstructLibrary({
   name: '@pgarbe/cdk-ecr-sync',
   description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
   jsiiVersion: Semver.caret('1.12.0'),
@@ -47,7 +47,7 @@ const project = new ConstructLibraryAws({
     'pre-commit': Semver.caret('1.2.2')
   },
   dependencies: {
-    "aws-sdk": Semver.caret("2.708.0"),
+    "aws-sdk": Semver.caret("2.764.0"),
     'jszip': Semver.caret("3.5.0")
   },
   bundledDependencies: [

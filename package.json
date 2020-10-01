@@ -90,7 +90,7 @@
     "@aws-cdk/aws-ssm": "^1.65.0",
     "@aws-cdk/core": "^1.65.0",
     "@aws-cdk/custom-resources": "^1.65.0",
-    "aws-sdk": "^2.708.0",
+    "aws-sdk": "^2.764.0",
     "jszip": "^3.5.0"
   },
   "bundledDependencies": [
