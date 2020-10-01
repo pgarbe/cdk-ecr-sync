@@ -31,10 +31,7 @@ export async function handler(): Promise<void> {
     const dockerImageTags = await getDockerImageTags(image.imageName);
     console.debug(dockerImageTags.join(','));
 
-    let missingImageTags: string[] = dockerImageTags.filter(item => ecrImageTags.indexOf(item) < 0);
-    if (!image.includeLatest) {
-      missingImageTags = missingImageTags.filter(x => !x.includes('latest'));
-    }
+    let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
 
     missingImageTags.forEach(t => {
       buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t}\n`;
@@ -47,6 +44,33 @@ export async function handler(): Promise<void> {
 
   const stream = await zipToFileStream(buildTriggerFile);
   await uploadToS3(env['BUCKET_NAME']!, 'images.zip', stream);
+}
+
+export async function filterTags(dockerImageTags: string[], ecrImageTags: (string | undefined)[], image: Image) {
+
+  let missingImageTags: string[] = dockerImageTags.filter(item => ecrImageTags.indexOf(item) < 0);
+  if (!image.includeLatest) {
+    missingImageTags = missingImageTags.filter(x => !x.includes('latest'));
+  }
+
+  return missingImageTags.filter(t => {
+
+    // Allow if tag matches `includeTags`
+    if (image.includeTags !== undefined) {
+      if (t.match(image.includeTags) === null) {
+        return false;
+      }
+    }
+
+    // Skip if tag matches `excludeTags`
+    if (image.excludeTags !== undefined) {
+      if (t.match(image.excludeTags) !== null) {
+        return false;
+      }
+    }
+
+    return true;
+  });
 }
 
 async function uploadToS3(bucket: string, key: string, stream: PassThrough) {
