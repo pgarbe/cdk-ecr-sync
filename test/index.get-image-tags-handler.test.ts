@@ -11,3 +11,15 @@ test('Docker image tags are loaded through pagination', async (done) => {
   done();
 
 }, 30000);
+
+test('Docker library image tags are loaded through pagination', async (done) => {
+
+  // WHEN
+  let tags = await handler.getDockerImageTags('amazonlinux');
+
+  // THEN
+  expect(tags.length).toBeGreaterThan(0);
+
+  done();
+
+}, 30000);
