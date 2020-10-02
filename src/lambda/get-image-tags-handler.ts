@@ -25,16 +25,16 @@ export async function handler(): Promise<void> {
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
     const ecrImageTags = (await getEcrImageTags(image.imageName));
-    console.debug(`ECR images for ${image.imageName}: ${ecrImageTags.join(',')}`);
+    console.debug(`ECR images for ${image.imageName}: ${ecrImageTags.map(t => `${t.tag} (${t.digest})`).join(',')}`);
 
     // List all image tags in Docker
     const dockerImageTags = await getDockerImageTags(image.imageName);
-    console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.join(',')}`);
+    console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.map(t => `${t.tag} (${t.digest})`).join(',')}`);
 
     let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
 
     missingImageTags.forEach(t => {
-      buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t}\n`;
+      buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t.tag}\n`;
     });
   }));
 
