@@ -34,7 +34,7 @@ export async function handler(): Promise<void> {
     let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
 
     missingImageTags.forEach(t => {
-      buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t}\n`;
+      buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t.tag}\n`;
     });
   }));
 
