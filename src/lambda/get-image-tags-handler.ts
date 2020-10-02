@@ -1,18 +1,17 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as aws from 'aws-sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { ImageIdentifierList, ListImagesResponse } from 'aws-sdk/clients/ecr';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Request, AWSError } from 'aws-sdk';
 import { env } from 'process';
 import { Stream, PassThrough } from 'stream';
 import { Image } from '../image';
-import { request, RequestOptions } from 'https';
-import { URL } from 'url';
+import { getDockerImageTags } from './docker-adapter';
+import { getEcrImageTags } from './ecr-adapter';
 
-const ecr = new aws.ECR();
+export interface ContainerImage { 
+  tag: string,
+  digest: string,
+}
 
 export async function handler(): Promise<void> {
 
@@ -24,12 +23,12 @@ export async function handler(): Promise<void> {
 
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
-    const ecrImageTags = (await getEcrImageTags(image.imageName)).map(i => i.imageTag);
-    console.debug((ecrImageTags).join(','));
+    const ecrImageTags = (await getEcrImageTags(image.imageName));
+    console.debug(`ECR images for ${image.imageName}: ${ecrImageTags.join(',')}`);
 
     // List all image tags in Docker
     const dockerImageTags = await getDockerImageTags(image.imageName);
-    console.debug(dockerImageTags.join(','));
+    console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.join(',')}`);
 
     let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
 
@@ -46,25 +45,28 @@ export async function handler(): Promise<void> {
   await uploadToS3(env['BUCKET_NAME']!, 'images.zip', stream);
 }
 
-export async function filterTags(dockerImageTags: string[], ecrImageTags: (string | undefined)[], image: Image) {
+export async function filterTags(dockerImageTags: ContainerImage[], ecrImageTags: ContainerImage[], image: Image) {
 
-  let missingImageTags: string[] = dockerImageTags.filter(item => ecrImageTags.indexOf(item) < 0);
+  let missingImageTags: ContainerImage[] = dockerImageTags.filter(dockerImage => {
+    return ecrImageTags.filter(ecrImage => ecrImage.tag === dockerImage.tag && ecrImage.digest === dockerImage.digest).length === 0
+  });
+
   if (!image.includeLatest) {
-    missingImageTags = missingImageTags.filter(x => !x.includes('latest'));
+    missingImageTags = missingImageTags.filter(x => !x.tag.includes('latest'));
   }
 
   return missingImageTags.filter(t => {
 
     // Allow if tag matches `includeTags`
     if (image.includeTags !== undefined) {
-      if (t.match(image.includeTags) === null) {
+      if (t.tag.match(image.includeTags) === null) {
         return false;
       }
     }
 
     // Skip if tag matches `excludeTags`
     if (image.excludeTags !== undefined) {
-      if (t.match(image.excludeTags) !== null) {
+      if (t.tag.match(image.excludeTags) !== null) {
         return false;
       }
     }
@@ -103,86 +105,4 @@ async function zipToFileStream(content: string): Promise<PassThrough> {
   await zip.generateNodeStream({type:'nodebuffer',streamFiles:true}).pipe(streamPassThrough);
 
   return streamPassThrough;
-}
-
-async function getEcrImageTags(image: string): Promise<ImageIdentifierList> {
-
-  const imageList = [] as ImageIdentifierList;
-  await (ecr.listImages({ repositoryName: image})).on('success', function handlePage(response) {
-
-    if (response.data === undefined) {
-      return; // TODO: Not sure how to handle this...
-    }
-    response.data.imageIds!.forEach( id => {imageList.push(id); });
-
-    if (response.hasNextPage()) {
-      // tslint:disable-next-line: no-floating-promises
-      (response.nextPage() as Request<ListImagesResponse, AWSError>).on('success', handlePage).promise();
-    }
-  }).promise();
-
-  return imageList;
-}
-
-export async function getDockerImageTags(image: string): Promise<string[]> {
-
-  const pageSize = 100;
-
-  if (!image.includes('/')) {
-    image = 'library/' + image;
-  }
-
-  let url = new URL(`https://hub.docker.com/v2/repositories/${image}/tags?page_size=${pageSize}`);
-
-  let results: tagResult[] = [];
-  let response: tagsResponse;
-
-  do {
-    response = await performRequest({
-      host: url.host,
-      path: url.pathname + url.search,
-      method: 'GET',
-    }) as tagsResponse;
-
-    results.push(...response.results);
-
-    if (response.next !== null) {
-      url = new URL(response.next)
-    }
-  } while (response !== undefined && response.next !== null) 
-
-  return results.map(x => x.name);
-}
-
-interface tagResult {
-  name: string
-}
-interface tagsResponse {
-  next: string
-  results: tagResult[]
-}
-
-function performRequest(options: RequestOptions) {
-  return new Promise((resolve, reject) => {
-    request(
-      options,
-      function(response) {
-        const { statusCode } = response;
-        if (statusCode === undefined || statusCode >= 300) {
-          reject(
-            new Error(response.statusMessage),
-          )
-        }
-        const chunks: any[] = [];
-        response.on('data', (chunk) => {
-          chunks.push(chunk);
-        });
-        response.on('end', () => {
-          const result = Buffer.concat(chunks).toString();
-          resolve(JSON.parse(result));
-        });
-      },
-    )
-      .end();
-  })
 }
