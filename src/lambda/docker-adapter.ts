@@ -25,18 +25,20 @@ export async function getDockerImageTags(image: string): Promise<ContainerImage[
     results.push(...response.results);
 
     if (response.next !== null) {
-      url = new URL(response.next)
+      url = new URL(response.next);
     }
-  } while (response !== undefined && response.next !== null) 
+  } while (response !== undefined && response.next !== null);
 
-  return results.map(result => { return {
-    tag: result.name, 
-    digest: getDigestForAmd64Linux(result),
-  }});
+  return results.map(result => {
+    return {
+      tag: result.name,
+      digest: getDigestForAmd64Linux(result),
+    };
+  });
 }
 
 function getDigestForAmd64Linux(result: dockerTag) {
-  return result.images.filter(i => i.architecture === 'amd64' && i.os === 'linux')[0]?.digest
+  return result.images.filter(i => i.architecture === 'amd64' && i.os === 'linux')[0]?.digest;
 }
 
 interface dockerTagImage {
@@ -49,8 +51,8 @@ interface dockerTag {
   images: dockerTagImage[];
 }
 interface dockerGetTagsResponse {
-  next: string
-  results: dockerTag[]
+  next: string;
+  results: dockerTag[];
 }
 
 function performRequest(options: RequestOptions) {
@@ -62,7 +64,7 @@ function performRequest(options: RequestOptions) {
         if (statusCode === undefined || statusCode >= 300) {
           reject(
             new Error(response.statusMessage),
-          )
+          );
         }
         const chunks: any[] = [];
         response.on('data', (chunk) => {
@@ -75,5 +77,5 @@ function performRequest(options: RequestOptions) {
       },
     )
       .end();
-  })
+  });
 }

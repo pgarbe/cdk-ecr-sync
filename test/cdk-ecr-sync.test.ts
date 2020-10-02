@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { expect as expectCDK, haveResource, haveResourceLike } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
 import * as EcrSync from '../src/index';
@@ -36,7 +37,7 @@ test('Defaults are correctly set', () => {
         },
       },
     },
-  }));    
+  }));
 });
 
 test('IncludeLatest is included when it is set to true', () => {
@@ -44,7 +45,7 @@ test('IncludeLatest is included when it is set to true', () => {
   const stack = new cdk.Stack(app, 'TestStack');
 
   // WHEN
-  new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', includeLatest: true}] });
+  new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', includeLatest: true }] });
 
   // THEN
   expectCDK(stack).to(haveResourceLike('AWS::Lambda::Function', {

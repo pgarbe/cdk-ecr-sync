@@ -1,16 +1,16 @@
-import * as cdk from '@aws-cdk/core';
-import * as ecr from '@aws-cdk/aws-ecr';
-import * as evt from '@aws-cdk/aws-events';
-import * as trgt from '@aws-cdk/aws-events-targets'
-import * as iam from '@aws-cdk/aws-iam';
+import * as fs from 'fs';
+import * as path from 'path';
 import * as cb from '@aws-cdk/aws-codebuild';
 import * as cp from '@aws-cdk/aws-codepipeline';
 import * as cpa from '@aws-cdk/aws-codepipeline-actions';
-import * as s3 from '@aws-cdk/aws-s3';
+import * as ecr from '@aws-cdk/aws-ecr';
+import * as evt from '@aws-cdk/aws-events';
+import * as trgt from '@aws-cdk/aws-events-targets';
+import * as iam from '@aws-cdk/aws-iam';
 import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
-import * as path from 'path';
-import * as fs from 'fs';
+import * as s3 from '@aws-cdk/aws-s3';
+import * as cdk from '@aws-cdk/core';
 import { Image } from './image';
 
 /**
@@ -123,7 +123,7 @@ export class EcrSync extends cdk.Construct {
             'runtime-versions': {
               docker: 18,
             },
-            'commands':[
+            'commands': [
               'aws --version',
               'curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"',
               'unzip -q awscliv2.zip',
@@ -132,7 +132,7 @@ export class EcrSync extends cdk.Construct {
             ],
           },
           build: {
-            commands:[
+            commands: [
               ' set -e\n \
                 while IFS=, read -r dockerImage ecrImage tag\n \
                 do\n \

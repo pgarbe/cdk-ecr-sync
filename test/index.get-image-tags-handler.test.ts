@@ -1,10 +1,10 @@
-import * as handler from '../src/lambda/get-image-tags-handler';
 import { Image } from '../src/image';
+import * as handler from '../src/lambda/get-image-tags-handler';
 
 test('Latest images are ignored', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: 'latest', digest: ''}];
+  const dockerImageTags = [{ tag: 'latest', digest: '' }];
   const ecrImageTags: handler.ContainerImage[] = [];
   const image: Image = { imageName: 'myImage', includeLatest: true };
 
@@ -20,7 +20,7 @@ test('Latest images are ignored', async (done) => {
 test('Only included tags', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: '1.0.0', digest: ''}, { tag: '1.5', digest: ''}, { tag: '2.0', digest: ''}, { tag: 'latest', digest: ''}];
+  const dockerImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.5', digest: '' }, { tag: '2.0', digest: '' }, { tag: 'latest', digest: '' }];
   const ecrImageTags: handler.ContainerImage[] = [];
   const image: Image = { imageName: 'myImage', includeTags: '^1' };
 
@@ -37,7 +37,7 @@ test('Only included tags', async (done) => {
 test('Exclude wins over include', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: '1.0.0', digest: ''}, { tag: '1.5', digest: ''}, { tag: '2.0', digest: ''}, { tag: 'latest', digest: ''}];
+  const dockerImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.5', digest: '' }, { tag: '2.0', digest: '' }, { tag: 'latest', digest: '' }];
   const ecrImageTags: handler.ContainerImage[] = [];
 
   const image: Image = { imageName: 'myImage', includeTags: '^1', excludeTags: '1.5' };
@@ -54,8 +54,8 @@ test('Exclude wins over include', async (done) => {
 test('Images missing in ECR are added', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: '1.0.0', digest: ''}, { tag: '1.5', digest: ''}, { tag: '2.0', digest: ''}, { tag: 'latest', digest: ''}];
-  const ecrImageTags = [{ tag: '1.0.0', digest: ''}];
+  const dockerImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.5', digest: '' }, { tag: '2.0', digest: '' }, { tag: 'latest', digest: '' }];
+  const ecrImageTags = [{ tag: '1.0.0', digest: '' }];
 
   const image: Image = { imageName: 'myImage' };
 
@@ -72,8 +72,8 @@ test('Images missing in ECR are added', async (done) => {
 test('Additional images in ECR are ignored', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: '1.0.0', digest: ''}, { tag: '1.5', digest: ''}, { tag: '2.0', digest: ''}, { tag: 'latest', digest: ''}];
-  const ecrImageTags = [{ tag: '1.0.0', digest: ''}, { tag: '1.1', digest: ''}];
+  const dockerImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.5', digest: '' }, { tag: '2.0', digest: '' }, { tag: 'latest', digest: '' }];
+  const ecrImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.1', digest: '' }];
 
   const image: Image = { imageName: 'myImage' };
 
@@ -91,8 +91,8 @@ test('Additional images in ECR are ignored', async (done) => {
 test('Existing tags with same digest are ignored', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae'}, { tag: '1.5', digest: 'sha256:b6b46bdc15'}];
-  const ecrImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae'}, { tag: '1.5', digest: 'sha256:b6b46bdc15'}];
+  const dockerImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae' }, { tag: '1.5', digest: 'sha256:b6b46bdc15' }];
+  const ecrImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae' }, { tag: '1.5', digest: 'sha256:b6b46bdc15' }];
   const image: Image = { imageName: 'myImage' };
 
   let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
@@ -106,8 +106,8 @@ test('Existing tags with same digest are ignored', async (done) => {
 test('Existing tags with different digest are synced', async (done) => {
 
   // WHEN
-  const dockerImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae'}, { tag: '1.5', digest: 'sha256:be7c1d95ac'}];
-  const ecrImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae'}, { tag: '1.5', digest: 'sha256:b6b46bdc15'}];
+  const dockerImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae' }, { tag: '1.5', digest: 'sha256:be7c1d95ac' }];
+  const ecrImageTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae' }, { tag: '1.5', digest: 'sha256:b6b46bdc15' }];
   const image: Image = { imageName: 'myImage' };
 
   let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);

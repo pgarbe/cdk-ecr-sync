@@ -4,22 +4,22 @@ import { ContainerImage } from './get-image-tags-handler';
 
 export async function getEcrImageTags(image: string): Promise<ContainerImage[]> {
 
-  let hostedZoneList: ContainerImage[] = []
+  let images: ContainerImage[] = [];
 
   return new Promise((resolve, _) => {
     const ecr = new aws.ECR();
 
-    ecr.listImages({ repositoryName: image})
-      .eachPage((_, data) => {
+    ecr.listImages({ repositoryName: image })
+      .eachPage((__, data) => {
         if (data === null) {
-          resolve(hostedZoneList)
-          return false
+          resolve(images);
+          return false;
         }
 
-        const mapped: ContainerImage[] = data.imageIds!.map(x => { return { tag: x.imageTag!, digest: x.imageDigest! }});
-        hostedZoneList = [...hostedZoneList,  ...mapped];
+        const mapped: ContainerImage[] = data.imageIds!.map(x => { return { tag: x.imageTag!, digest: x.imageDigest! };});
+        images = [...images, ...mapped];
 
-        return true
-      })
-  })
+        return true;
+      });
+  });
 }

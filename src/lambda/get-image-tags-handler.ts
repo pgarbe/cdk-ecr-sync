@@ -1,25 +1,26 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { env } from 'process';
+import { Stream, PassThrough } from 'stream';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as aws from 'aws-sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
-import { env } from 'process';
-import { Stream, PassThrough } from 'stream';
 import { Image } from '../image';
 import { getDockerImageTags } from './docker-adapter';
 import { getEcrImageTags } from './ecr-adapter';
 
-export interface ContainerImage { 
-  tag: string,
-  digest: string,
+export interface ContainerImage {
+  tag: string;
+  digest: string;
 }
 
 export async function handler(): Promise<void> {
 
-  const accountId = env['AWS_ACCOUNT_ID'];
-  const region = env['REGION'];
+  const accountId = env.AWS_ACCOUNT_ID;
+  const region = env.REGION;
 
   let buildTriggerFile: string = '';
-  const images: Image[] = JSON.parse(env['IMAGES'] ?? '[]');
+  const images: Image[] = JSON.parse(env.IMAGES ?? '[]');
 
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
@@ -42,13 +43,13 @@ export async function handler(): Promise<void> {
   if (buildTriggerFile === '') return;
 
   const stream = await zipToFileStream(buildTriggerFile);
-  await uploadToS3(env['BUCKET_NAME']!, 'images.zip', stream);
+  await uploadToS3(env.BUCKET_NAME!, 'images.zip', stream);
 }
 
 export async function filterTags(dockerImageTags: ContainerImage[], ecrImageTags: ContainerImage[], image: Image) {
 
   let missingImageTags: ContainerImage[] = dockerImageTags.filter(dockerImage => {
-    return ecrImageTags.filter(ecrImage => ecrImage.tag === dockerImage.tag && ecrImage.digest === dockerImage.digest).length === 0
+    return ecrImageTags.filter(ecrImage => ecrImage.tag === dockerImage.tag && ecrImage.digest === dockerImage.digest).length === 0;
   });
 
   if (!image.includeLatest) {
@@ -102,7 +103,7 @@ async function zipToFileStream(content: string): Promise<PassThrough> {
   zip.file('images.csv', content);
 
   const streamPassThrough = new Stream.PassThrough();
-  await zip.generateNodeStream({type:'nodebuffer',streamFiles:true}).pipe(streamPassThrough);
+  await zip.generateNodeStream({ type: 'nodebuffer', streamFiles: true }).pipe(streamPassThrough);
 
   return streamPassThrough;
 }
