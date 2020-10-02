@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.4.0...v0.4.1) (2020-10-02)
+
+
+### Bug Fixes
+
+* Pagination with ECR and digest comparison ([af452ae](https://github.com/pgarbe/cdk-ecr-sync/commit/af452aed4cd146ddb96b013be6cffe8848501a50)), closes [#331](https://github.com/pgarbe/cdk-ecr-sync/issues/331)
+
 ## [0.4.0](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.3.2...v0.4.0) (2020-10-01)
 
 
