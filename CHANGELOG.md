@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.4.1...v0.4.2) (2020-10-02)
+
+
+### Bug Fixes
+
+* log image tag and digest properly ([d5d1d36](https://github.com/pgarbe/cdk-ecr-sync/commit/d5d1d36386cb37deaa52b64fbcfc5dc0e9985389))
+* write tags to trigger file ([de10af4](https://github.com/pgarbe/cdk-ecr-sync/commit/de10af44eb198b638486920ad8f86018c2e3f6d9))
+
 ### [0.4.1](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.4.0...v0.4.1) (2020-10-02)
 
 
