@@ -43,22 +43,9 @@ new EcrSync(scope: Construct, id: string, props: EcrSyncProps)
 ### Methods
 
 
-#### grantDescribe(grantee) <a id="pgarbe-cdk-ecr-sync-ecrsync-grantdescribe"></a>
-
-Grant the given principal identity permissions to perform describe and list images on all repositories.
-
-```ts
-grantDescribe(grantee: IGrantable): void
-```
-
-* **grantee** (<code>[IGrantable](#aws-cdk-aws-iam-igrantable)</code>)  *No description*
-
-
-
-
 #### grantPull(grantee) <a id="pgarbe-cdk-ecr-sync-ecrsync-grantpull"></a>
 
-Grant the given identity permissions to use the images on all repositories.
+Grant the given identity permissions to use the images in this repository.
 
 ```ts
 grantPull(grantee: IGrantable): void
