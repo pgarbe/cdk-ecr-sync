@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.4.2...v0.5.0) (2020-10-07)
+
+
+### Features
+
+* Support multiple include and exclude tags ([db684c7](https://github.com/pgarbe/cdk-ecr-sync/commit/db684c7920193750fda1c34f55353472cc73938e))
+
 ### [0.4.2](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.4.1...v0.4.2) (2020-10-02)
 
 

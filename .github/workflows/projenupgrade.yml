@@ -12,11 +12,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
-      - run: yarn install --frozen-lockfile
-      - run: yarn projen
+      - run: npx projen@0.3.83
       - name: Anti-tamper check
         run: git diff --exit-code
-      - run: yarn run projen:upgrade
+      - run: yarn projen:upgrade
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
