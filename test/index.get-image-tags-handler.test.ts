@@ -1,28 +1,12 @@
 import { Image } from '../src/image';
 import * as handler from '../src/lambda/get-image-tags-handler';
 
-test('Latest images are ignored', async (done) => {
-
-  // WHEN
-  const dockerImageTags = [{ tag: 'latest', digest: '' }];
-  const ecrImageTags: handler.ContainerImage[] = [];
-  const image: Image = { imageName: 'myImage', includeLatest: true };
-
-  let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
-
-  // THEN
-  expect(tags.length).toBe(1);
-  expect(tags[0].tag).toBe('latest');
-
-  done();
-});
-
 test('Only included tags', async (done) => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.5', digest: '' }, { tag: '2.0', digest: '' }, { tag: 'latest', digest: '' }];
   const ecrImageTags: handler.ContainerImage[] = [];
-  const image: Image = { imageName: 'myImage', includeTags: '^1' };
+  const image: Image = { imageName: 'myImage', includeTags: ['^1'] };
 
   let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
 
@@ -40,7 +24,7 @@ test('Exclude wins over include', async (done) => {
   const dockerImageTags = [{ tag: '1.0.0', digest: '' }, { tag: '1.5', digest: '' }, { tag: '2.0', digest: '' }, { tag: 'latest', digest: '' }];
   const ecrImageTags: handler.ContainerImage[] = [];
 
-  const image: Image = { imageName: 'myImage', includeTags: '^1', excludeTags: '1.5' };
+  const image: Image = { imageName: 'myImage', includeTags: ['^1'], excludeTags: ['1.5'] };
 
   let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
 
@@ -62,9 +46,10 @@ test('Images missing in ECR are added', async (done) => {
   let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
 
   // THEN
-  expect(tags.length).toBe(2);
+  expect(tags.length).toBe(3);
   expect(tags[0].tag).toBe('1.5');
   expect(tags[1].tag).toBe('2.0');
+  expect(tags[2].tag).toBe('latest');
 
   done();
 });
@@ -80,10 +65,10 @@ test('Additional images in ECR are ignored', async (done) => {
   let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
 
   // THEN
-  expect(tags.length).toBe(2);
-
+  expect(tags.length).toBe(3);
   expect(tags[0].tag).toBe('1.5');
   expect(tags[1].tag).toBe('2.0');
+  expect(tags[2].tag).toBe('latest');
 
   done();
 });

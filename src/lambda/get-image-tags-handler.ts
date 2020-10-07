@@ -25,11 +25,11 @@ export async function handler(): Promise<void> {
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
     const ecrImageTags = (await getEcrImageTags(image.imageName));
-    console.debug(`ECR images for ${image.imageName}: ${ecrImageTags.map(t => `${t.tag} (${t.digest})`).join(',')}`);
+    console.debug(`ECR images for ${image.imageName}: \n${ecrImageTags.map(t => `${t.tag} (${t.digest})`).join('\n')}`);
 
     // List all image tags in Docker
     const dockerImageTags = await getDockerImageTags(image.imageName);
-    console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.map(t => `${t.tag} (${t.digest})`).join(',')}`);
+    console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.map(t => `${t.tag} (${t.digest})`).join('\n')}`);
 
     let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
 
@@ -52,27 +52,28 @@ export async function filterTags(dockerImageTags: ContainerImage[], ecrImageTags
     return ecrImageTags.filter(ecrImage => ecrImage.tag === dockerImage.tag && ecrImage.digest === dockerImage.digest).length === 0;
   });
 
-  if (!image.includeLatest) {
-    missingImageTags = missingImageTags.filter(x => !x.tag.includes('latest'));
-  }
-
   return missingImageTags.filter(t => {
-
-    // Allow if tag matches `includeTags`
-    if (image.includeTags !== undefined) {
-      if (t.tag.match(image.includeTags) === null) {
-        return false;
-      }
-    }
 
     // Skip if tag matches `excludeTags`
     if (image.excludeTags !== undefined) {
-      if (t.tag.match(image.excludeTags) !== null) {
+      if (image.excludeTags.some(excludeTag => t.tag.match(excludeTag))) {
         return false;
-      }
+      };
     }
 
-    return true;
+    // Allow if tag matches `includeTags`
+    if (image.includeTags !== undefined) {
+      if (image.includeTags.some(includeTag => t.tag.match(includeTag))) {
+        return true;
+      };
+    }
+
+    // Allow the rest if nothing is specified
+    if (image.includeTags === undefined && image.excludeTags === undefined) {
+      return true;
+    }
+
+    return false;
   });
 }
 

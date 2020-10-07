@@ -43,9 +43,22 @@ new EcrSync(scope: Construct, id: string, props: EcrSyncProps)
 ### Methods
 
 
+#### grantDescribe(grantee) <a id="pgarbe-cdk-ecr-sync-ecrsync-grantdescribe"></a>
+
+Grant the given principal identity permissions to perform describe and list images on all repositories.
+
+```ts
+grantDescribe(grantee: IGrantable): void
+```
+
+* **grantee** (<code>[IGrantable](#aws-cdk-aws-iam-igrantable)</code>)  *No description*
+
+
+
+
 #### grantPull(grantee) <a id="pgarbe-cdk-ecr-sync-ecrsync-grantpull"></a>
 
-Grant the given identity permissions to use the images in this repository.
+Grant the given identity permissions to use the images on all repositories.
 
 ```ts
 grantPull(grantee: IGrantable): void
@@ -83,9 +96,8 @@ Properties of a EcrSync image.
 Name | Type | Description 
 -----|------|-------------
 **imageName** | <code>string</code> | The name of the image that should be proxied by ECR.
-**excludeTags**? | <code>string</code> | A regular expression which tags should be included.<br/>__*Default*__: Empty. No tags are excluded
-**includeLatest**? | <code>boolean</code> | Should the "latest" tag also included?<br/>__*Default*__: false
-**includeTags**? | <code>string</code> | A regular expression which tags should be included.<br/>__*Default*__: Emtpy. All tags are included
+**excludeTags**? | <code>Array<string></code> | A list of regular expression which tags should be included. Only one of the defined tags must match.<br/>__*Default*__: Empty. No tags are excluded
+**includeTags**? | <code>Array<string></code> | A list of regular expression which tags should be included. Only one of the defined tags must match.<br/>__*Default*__: Emtpy. All tags are included
 
 
 

@@ -40,12 +40,12 @@ test('Defaults are correctly set', () => {
   }));
 });
 
-test('IncludeLatest is included when it is set to true', () => {
+test('excludeTags is included when it is set to true', () => {
   const app = new cdk.App();
   const stack = new cdk.Stack(app, 'TestStack');
 
   // WHEN
-  new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', includeLatest: true }] });
+  new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }] });
 
   // THEN
   expectCDK(stack).to(haveResourceLike('AWS::Lambda::Function', {
@@ -57,7 +57,7 @@ test('IncludeLatest is included when it is set to true', () => {
         REGION: {
           Ref: 'AWS::Region',
         },
-        IMAGES: '[{"imageName":"foo/bar","includeLatest":true}]',
+        IMAGES: '[{"imageName":"foo/bar","excludeTags":["latest"]}]',
         BUCKET_NAME: {
           Ref: 'MyTestConstructArtifactBucket864F78F1',
         },
@@ -65,4 +65,3 @@ test('IncludeLatest is included when it is set to true', () => {
     },
   }));
 });
-

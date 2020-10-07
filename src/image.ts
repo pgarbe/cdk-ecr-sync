@@ -10,27 +10,22 @@ export interface Image {
   readonly imageName: string;
 
   /**
-   * Should the "latest" tag also included? Keep in mind that "latest" is not a version!
-   *
-   * @default false
-   */
-  readonly includeLatest?: boolean;
-
-  /**
-   * A regular expression which tags should be included.
+   * A list of regular expression which tags should be included.
+   * Only one of the defined tags must match.
    *
    * If excludeTags is also defined, excludeTags wins.
    *
    * @default Emtpy. All tags are included
    */
-  readonly includeTags?: string;
+  readonly includeTags?: string[];
 
   /**
-   * A regular expression which tags should be included.
+   * A list of regular expression which tags should be included.
+   * Only one of the defined tags must match.
    *
    * If includeTags is also defined, excludeTags wins.
    *
    * @default Empty. No tags are excluded
    */
-  readonly excludeTags?: string;
+  readonly excludeTags?: string[];
 }
