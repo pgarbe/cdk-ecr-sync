@@ -1,6 +1,6 @@
 const { AwsCdkConstructLibrary, Semver } = require('projen');
 
-const LAST_AWSCDK_VERSION = '1.65.0';
+const LAST_AWSCDK_VERSION = '1.67.0';
 
 const project = new AwsCdkConstructLibrary({
   name: '@pgarbe/cdk-ecr-sync',
