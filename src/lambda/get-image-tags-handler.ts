@@ -11,7 +11,7 @@ import { getEcrImageTags } from './ecr-adapter';
 
 export interface ContainerImage {
   tag: string;
-  digest: string;
+  digest?: string;
 }
 
 export async function handler(): Promise<void> {
@@ -54,7 +54,12 @@ export async function filterTags(dockerImageTags: ContainerImage[], ecrImageTags
 
   return missingImageTags.filter(t => {
 
-    // Skip if tag matches `excludeTags`
+    // If nothing is defined allow all
+    if (image.includeTags === undefined && image.excludeTags === undefined) {
+      return true;
+    }
+
+    // Deny if tag matches `excludeTags`
     if (image.excludeTags !== undefined) {
       if (image.excludeTags.some(excludeTag => t.tag.match(excludeTag))) {
         return false;
@@ -65,11 +70,11 @@ export async function filterTags(dockerImageTags: ContainerImage[], ecrImageTags
     if (image.includeTags !== undefined) {
       if (image.includeTags.some(includeTag => t.tag.match(includeTag))) {
         return true;
-      };
+      }
     }
 
-    // Allow the rest if nothing is specified
-    if (image.includeTags === undefined && image.excludeTags === undefined) {
+    // If only excludeTags is defined all others should be included
+    if (image.includeTags === undefined && image.excludeTags !== undefined) {
       return true;
     }
 

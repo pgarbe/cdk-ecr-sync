@@ -35,6 +35,51 @@ test('Exclude wins over include', async (done) => {
   done();
 });
 
+test('Only excluded tags', async (done) => {
+
+  // WHEN
+  const dockerImageTags = [
+    { tag: '4.2.10-windowsservercore-ltsc2016 ', digest: undefined },
+    { tag: '4.2.10-windowsservercore', digest: undefined },
+    { tag: '4.2.10', digest: 'sha256:2fc6a72a6e563f51f5fcc9e997eed996cec4db45aa0d415ff61928a9ecbbee95' },
+    { tag: '3.6', digest: 'sha256:32ee79b2b3a29600f1cd7cb99f2089e750420de52b4afa1a72f99c35ef259688' },
+    { tag: '3', digest: 'sha256:32ee79b2b3a29600f1cd7cb99f2089e750420de52b4afa1a72f99c35ef259688' },
+    { tag: '3.6.20', digest: undefined },
+  ];
+  const ecrImageTags = [] as handler.ContainerImage[];
+  const image: Image = { imageName: 'myImage', excludeTags: ['windowsservercore', '^3'] };
+
+  let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
+
+  // THEN
+  expect(tags.length).toBe(1);
+  expect(tags[0].tag).toBe('4.2.10');
+
+  done();
+});
+
+test('No include and no exclude returns all', async (done) => {
+
+  // WHEN
+  const dockerImageTags = [
+    { tag: '4.2.10-windowsservercore-ltsc2016 ', digest: undefined },
+    { tag: '4.2.10-windowsservercore', digest: undefined },
+    { tag: '4.2.10', digest: 'sha256:2fc6a72a6e563f51f5fcc9e997eed996cec4db45aa0d415ff61928a9ecbbee95' },
+    { tag: '3.6', digest: 'sha256:32ee79b2b3a29600f1cd7cb99f2089e750420de52b4afa1a72f99c35ef259688' },
+    { tag: '3', digest: 'sha256:32ee79b2b3a29600f1cd7cb99f2089e750420de52b4afa1a72f99c35ef259688' },
+    { tag: '3.6.20', digest: undefined },
+  ];
+  const ecrImageTags = [] as handler.ContainerImage[];
+  const image: Image = { imageName: 'myImage' };
+
+  let tags = await handler.filterTags(dockerImageTags, ecrImageTags, image);
+
+  // THEN
+  expect(tags.length).toBe(6);
+
+  done();
+});
+
 test('Images missing in ECR are added', async (done) => {
 
   // WHEN
