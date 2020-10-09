@@ -7,7 +7,7 @@ test('Docker image tags are loaded through pagination', async (done) => {
 
   // THEN
   expect(tags.length).toBeGreaterThan(100);
-  expect(tags[0].digest.length).toBeGreaterThan(0);
+  expect(tags[0].digest?.length).toBeGreaterThan(0);
   expect(tags[0].tag.length).toBeGreaterThan(0);
 
   done();
@@ -21,7 +21,7 @@ test('Docker library image tags are loaded through pagination', async (done) => 
 
   // THEN
   expect(tags.length).toBeGreaterThan(0);
-  expect(tags[0].digest.length).toBeGreaterThan(0);
+  expect(tags[0].digest?.length).toBeGreaterThan(0);
   expect(tags[0].tag.length).toBeGreaterThan(0);
 
   done();

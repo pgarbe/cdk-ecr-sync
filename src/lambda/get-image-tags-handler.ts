@@ -38,7 +38,7 @@ export async function handler(): Promise<void> {
     });
   }));
 
-  console.log(`Images to sync:\n${buildTriggerFile}`);
+  console.info(`Images to sync:\n${buildTriggerFile}`);
 
   if (buildTriggerFile === '') return;
 
