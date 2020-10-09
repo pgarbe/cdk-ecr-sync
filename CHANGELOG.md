@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.1...v0.5.2) (2020-10-09)
+
+
+### Bug Fixes
+
+* only exclude filters were not applied ([a102bba](https://github.com/pgarbe/cdk-ecr-sync/commit/a102bba433fcb6301778555e2f43d66ee8bbe037))
+
 ### [0.5.1](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.0...v0.5.1) (2020-10-07)
 
 ## [0.5.0](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.4.2...v0.5.0) (2020-10-07)
