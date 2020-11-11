@@ -42,15 +42,15 @@ const project = new AwsCdkConstructLibrary({
     "@aws-cdk/core",
     "@aws-cdk/custom-resources",
   ],
-  devDependencies: {
-    'parcel': Semver.pinned('2.0.0-beta.1'),
-    'pre-commit': Semver.caret('1.2.2')
-  },
-  dependencies: {
-    "aws-sdk": Semver.caret("2.764.0"),
-    'jszip': Semver.caret("3.5.0")
-  },
-  bundledDependencies: [
+  devDeps: [
+    'parcel',
+    'pre-commit'
+  ],
+  deps: [
+    "aws-sdk",
+    'jszip'
+  ],
+  bundledDeps: [
     'aws-sdk',
     'jszip'
   ]
