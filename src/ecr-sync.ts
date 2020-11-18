@@ -32,6 +32,13 @@ export interface EcrSyncProps {
   readonly lifcecyleRule?: ecr.LifecycleRule;
 
   /**
+   * A prefix for all ECR repository names.
+   *
+   * @default Empty.
+   */
+  readonly repoPrefix?: string;
+
+  /**
    * Optional. Schedule when images should be synchronized.
    *
    * @default is once a day.
@@ -84,8 +91,9 @@ export class EcrSync extends cdk.Construct {
     });
 
     props.dockerImages.forEach(element => {
+      const repoName = (props.repoPrefix) ? `${props.repoPrefix}/${element.imageName}` : element.imageName;
       const repo = new ecr.Repository(this, element.imageName, {
-        repositoryName: element.imageName,
+        repositoryName: repoName,
       });
       repo.grantPullPush(buildRole);
 

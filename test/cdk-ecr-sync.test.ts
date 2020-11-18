@@ -65,3 +65,30 @@ test('excludeTags is included when it is set to true', () => {
     },
   }));
 });
+
+
+test('Reponame prefix is set when available', () => {
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'TestStack');
+
+  // WHEN
+  new EcrSync.EcrSync(stack, 'MyTestConstruct', { repoPrefix: 'myprefix', dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }] });
+
+  // THEN
+  expectCDK(stack).to(haveResourceLike('AWS::ECR::Repository', {
+    RepositoryName: 'myprefix/foo/bar',
+  }));
+});
+
+test('Reponame is used from image name', () => {
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'TestStack');
+
+  // WHEN
+  new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }] });
+
+  // THEN
+  expectCDK(stack).to(haveResourceLike('AWS::ECR::Repository', {
+    RepositoryName: 'foo/bar',
+  }));
+});
