@@ -28,3 +28,16 @@ test('Docker library image tags are loaded through pagination', async (done) => 
 
 }, 30000);
 
+
+test('Docker library image tags include only amd64/linux images', async (done) => {
+
+  // WHEN
+  let tags = await docker.getDockerImageTags('mongo');
+
+  // THEN
+  expect(tags.filter(t => t.tag === '4.2.4').length).toBe(0); // mongo:4.2.4 has only amd64/windows images
+
+  done();
+
+}, 30000);
+
