@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.3...v0.5.4) (2020-11-18)
+
+
+### Features
+
+* ability to prefix ECR repositories ([30e38d6](https://github.com/pgarbe/cdk-ecr-sync/commit/30e38d6badf53758435a13ec6370caf49a4c19e4)), closes [#414](https://github.com/pgarbe/cdk-ecr-sync/issues/414)
+
+
+### Bug Fixes
+
+* Ignore tags where no matching manifest exists for linux/amd64 ([a41716d](https://github.com/pgarbe/cdk-ecr-sync/commit/a41716d548945ca7597dee396309224e5a655f30))
+
 ### [0.5.3](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.2...v0.5.3) (2020-10-09)
 
 ### [0.5.2](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.1...v0.5.2) (2020-10-09)
