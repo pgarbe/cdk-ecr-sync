@@ -148,3 +148,31 @@ test('Existing tags with different digest are synced', async (done) => {
 
   done();
 });
+
+test('Format without prefix', async (done) => {
+
+  // WHEN
+  const missingTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae' }];
+  const image: Image = { imageName: 'myImage' };
+
+  let triggerFile = await handler.formatTriggerLines(image, missingTags, '', '123456789012', 'eu-west-1');
+
+  // THEN
+  expect(triggerFile).toStrictEqual('myImage,123456789012.dkr.ecr.eu-west-1.amazonaws.com/myImage,1.0.0\n');
+
+  done();
+});
+
+test('Format with prefix', async (done) => {
+
+  // WHEN
+  const missingTags = [{ tag: '1.0.0', digest: 'sha256:655ed9c3ae' }];
+  const image: Image = { imageName: 'myImage' };
+
+  let triggerFile = await handler.formatTriggerLines(image, missingTags, 'myPrefix', '123456789012', 'eu-west-1');
+
+  // THEN
+  expect(triggerFile).toStrictEqual('myImage,123456789012.dkr.ecr.eu-west-1.amazonaws.com/myPrefix/myImage,1.0.0\n');
+
+  done();
+});

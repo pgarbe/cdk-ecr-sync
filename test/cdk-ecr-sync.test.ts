@@ -78,6 +78,13 @@ test('Reponame prefix is set when available', () => {
   expectCDK(stack).to(haveResourceLike('AWS::ECR::Repository', {
     RepositoryName: 'myprefix/foo/bar',
   }));
+  expectCDK(stack).to(haveResourceLike('AWS::Lambda::Function', {
+    Environment: {
+      Variables: {
+        REPO_PREFIX: 'myprefix',
+      },
+    },
+  }));
 });
 
 test('Reponame is used from image name', () => {

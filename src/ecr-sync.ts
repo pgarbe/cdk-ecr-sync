@@ -80,6 +80,7 @@ export class EcrSync extends cdk.Construct {
         AWS_ACCOUNT_ID: cdk.Stack.of(this).account,
         REGION: cdk.Stack.of(this).region,
         IMAGES: JSON.stringify(props.dockerImages),
+        REPO_PREFIX: props.repoPrefix ?? '',
         BUCKET_NAME: artifactsBucket.bucketName,
       },
     });

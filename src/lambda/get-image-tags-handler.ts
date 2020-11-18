@@ -16,11 +16,13 @@ export interface ContainerImage {
 
 export async function handler(): Promise<void> {
 
-  const accountId = env.AWS_ACCOUNT_ID;
-  const region = env.REGION;
+  const accountId = env.AWS_ACCOUNT_ID!;
+  const region = env.REGION!;
+
+  const images: Image[] = JSON.parse(env.IMAGES ?? '[]');
+  const repoPrefix: string = env.REPO_PREFIX ?? '';
 
   let buildTriggerFile: string = '';
-  const images: Image[] = JSON.parse(env.IMAGES ?? '[]');
 
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
@@ -32,10 +34,7 @@ export async function handler(): Promise<void> {
     console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.map(t => `${t.tag} (${t.digest})`).join('\n')}`);
 
     let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
-
-    missingImageTags.forEach(t => {
-      buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${image.imageName},${t.tag}\n`;
-    });
+    buildTriggerFile += await formatTriggerLines(image, missingImageTags, repoPrefix, accountId, region);
   }));
 
   console.info(`Images to sync:\n${buildTriggerFile}`);
@@ -44,6 +43,18 @@ export async function handler(): Promise<void> {
 
   const stream = await zipToFileStream(buildTriggerFile);
   await uploadToS3(env.BUCKET_NAME!, 'images.zip', stream);
+}
+
+export async function formatTriggerLines(image: Image, missingImageTags: ContainerImage[], repoPrefix: string, accountId: string, region: string) {
+
+  let buildTriggerFile: string = '';
+
+  missingImageTags.forEach(t => {
+    const ecrImageName = (repoPrefix) ? `${repoPrefix}/${image.imageName}` : image.imageName;
+    buildTriggerFile += `${image.imageName},${accountId}.dkr.ecr.${region}.amazonaws.com/${ecrImageName},${t.tag}\n`;
+  });
+
+  return buildTriggerFile;
 }
 
 export async function filterTags(dockerImageTags: ContainerImage[], ecrImageTags: ContainerImage[], image: Image) {
