@@ -29,7 +29,10 @@ export async function getDockerImageTags(image: string): Promise<ContainerImage[
     }
   } while (response !== undefined && response.next !== null);
 
-  return results.map(result => {
+  // Return tags when there's at least one amd64/linux image
+  let amdLinuxresults = results.filter(result => result.images.filter(i => i.architecture === 'amd64' && i.os === 'linux').length > 0);
+
+  return amdLinuxresults.map(result => {
     return {
       tag: result.name,
       digest: getDigestForAmd64Linux(result),
@@ -59,7 +62,7 @@ function performRequest(options: RequestOptions) {
   return new Promise((resolve, reject) => {
     request(
       options,
-      function(response) {
+      function (response) {
         const { statusCode } = response;
         if (statusCode === undefined || statusCode >= 300) {
           reject(
