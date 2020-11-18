@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.5](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.4...v0.5.5) (2020-11-18)
+
+
+### Bug Fixes
+
+* Repo prefix has not been used in sync ([ef04119](https://github.com/pgarbe/cdk-ecr-sync/commit/ef0411980f06fc6202fc9a792fcb544de79aea34))
+
 ### [0.5.4](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.3...v0.5.4) (2020-11-18)
 
 
