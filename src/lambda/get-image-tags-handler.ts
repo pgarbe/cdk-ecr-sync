@@ -26,7 +26,13 @@ export async function handler(): Promise<void> {
 
   await Promise.all(images.map(async (image: Image) => {
     // List all image tags in ECR
-    const ecrImageTags = (await getEcrImageTags(image.imageName));
+    let ecrImageName = image.imageName;
+
+    if (repoPrefix.length > 0) {
+      ecrImageName = `${repoPrefix}/${ecrImageName}`
+    }
+
+    const ecrImageTags = await getEcrImageTags(ecrImageName);
     console.debug(`ECR images for ${image.imageName}: \n${ecrImageTags.map(t => `${t.tag} (${t.digest})`).join('\n')}`);
 
     // List all image tags in Docker
