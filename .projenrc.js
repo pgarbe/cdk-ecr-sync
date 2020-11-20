@@ -1,11 +1,8 @@
-const { AwsCdkConstructLibrary, Semver } = require('projen');
-
-const LAST_AWSCDK_VERSION = '1.67.0';
+const { AwsCdkConstructLibrary } = require('projen');
 
 const project = new AwsCdkConstructLibrary({
   name: '@pgarbe/cdk-ecr-sync',
   description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
-  jsiiVersion: Semver.caret('1.12.0'),
   authorName: 'Philipp Garbe',
   authorUrl: 'https://garbe.io',
   repository: 'https://github.com/pgarbe/cdk-ecr-sync.git',
@@ -23,7 +20,7 @@ const project = new AwsCdkConstructLibrary({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: LAST_AWSCDK_VERSION,
+  cdkVersion: "1.74.0",
   cdkDependencies: [
     "@aws-cdk/aws-cloudformation",
     "@aws-cdk/aws-codebuild",
@@ -68,7 +65,6 @@ const project = new AwsCdkConstructLibrary({
   // }
 });
 
-project.jest.config.time
 project.gitignore.exclude('.parcel-cache');
 project.gitignore.exclude('cdk.out');
 project.npmignore.exclude('examples');

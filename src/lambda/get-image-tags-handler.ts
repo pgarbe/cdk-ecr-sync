@@ -29,7 +29,7 @@ export async function handler(): Promise<void> {
     let ecrImageName = image.imageName;
 
     if (repoPrefix.length > 0) {
-      ecrImageName = `${repoPrefix}/${ecrImageName}`
+      ecrImageName = `${repoPrefix}/${ecrImageName}`;
     }
 
     const ecrImageTags = await getEcrImageTags(ecrImageName);
