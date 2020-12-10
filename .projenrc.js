@@ -7,50 +7,50 @@ const project = new AwsCdkConstructLibrary({
   authorUrl: 'https://garbe.io',
   repository: 'https://github.com/pgarbe/cdk-ecr-sync.git',
   keywords: [
-    "cdk",
-    "ecr"
+    'cdk',
+    'ecr',
   ],
 
   releaseEveryCommit: false,
 
   catalog: {
-    twitter: 'pgarbe'
+    twitter: 'pgarbe',
   },
 
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: "1.74.0",
+  cdkVersion: '1.77.0',
   cdkDependencies: [
-    "@aws-cdk/aws-cloudformation",
-    "@aws-cdk/aws-codebuild",
-    "@aws-cdk/aws-codepipeline",
-    "@aws-cdk/aws-codepipeline-actions",
-    "@aws-cdk/aws-ecr",
-    "@aws-cdk/aws-ecs",
-    "@aws-cdk/aws-events",
-    "@aws-cdk/aws-events-targets",
-    "@aws-cdk/aws-iam",
-    "@aws-cdk/aws-lambda",
-    "@aws-cdk/aws-lambda-nodejs",
-    "@aws-cdk/aws-logs",
-    "@aws-cdk/aws-s3",
-    "@aws-cdk/aws-ssm",
-    "@aws-cdk/core",
-    "@aws-cdk/custom-resources",
+    '@aws-cdk/aws-cloudformation',
+    '@aws-cdk/aws-codebuild',
+    '@aws-cdk/aws-codepipeline',
+    '@aws-cdk/aws-codepipeline-actions',
+    '@aws-cdk/aws-ecr',
+    '@aws-cdk/aws-ecs',
+    '@aws-cdk/aws-events',
+    '@aws-cdk/aws-events-targets',
+    '@aws-cdk/aws-iam',
+    '@aws-cdk/aws-lambda',
+    '@aws-cdk/aws-lambda-nodejs',
+    '@aws-cdk/aws-logs',
+    '@aws-cdk/aws-s3',
+    '@aws-cdk/aws-ssm',
+    '@aws-cdk/core',
+    '@aws-cdk/custom-resources',
   ],
   devDeps: [
-    'parcel',
-    'pre-commit'
+    'esbuild',
+    'pre-commit',
   ],
   deps: [
-    "aws-sdk",
-    'jszip'
+    'aws-sdk',
+    'jszip',
   ],
   bundledDeps: [
     'aws-sdk',
-    'jszip'
-  ]
+    'jszip',
+  ],
 
   // jsii publishing
 
@@ -65,7 +65,6 @@ const project = new AwsCdkConstructLibrary({
   // }
 });
 
-project.gitignore.exclude('.parcel-cache');
 project.gitignore.exclude('cdk.out');
 project.npmignore.exclude('examples');
 project.synth();
