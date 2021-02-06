@@ -2,14 +2,13 @@ const { AwsCdkConstructLibrary } = require('projen');
 
 const project = new AwsCdkConstructLibrary({
   name: '@pgarbe/cdk-ecr-sync',
-  description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
+  description:
+    'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
   authorName: 'Philipp Garbe',
   authorUrl: 'https://garbe.io',
   repository: 'https://github.com/pgarbe/cdk-ecr-sync.git',
-  keywords: [
-    'cdk',
-    'ecr',
-  ],
+  keywords: ['cdk', 'ecr'],
+  defaultReleaseBranch: 'main',
 
   releaseEveryCommit: false,
 
@@ -39,18 +38,9 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/core',
     '@aws-cdk/custom-resources',
   ],
-  devDeps: [
-    'esbuild',
-    'pre-commit',
-  ],
-  deps: [
-    'aws-sdk',
-    'jszip',
-  ],
-  bundledDeps: [
-    'aws-sdk',
-    'jszip',
-  ],
+  devDeps: ['esbuild', 'pre-commit'],
+  deps: ['aws-sdk', 'jszip'],
+  bundledDeps: ['aws-sdk', 'jszip'],
 
   // jsii publishing
 

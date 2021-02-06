@@ -5,11 +5,12 @@
     "type": "git",
     "url": "https://github.com/pgarbe/cdk-ecr-sync.git"
   },
-  "bin": {},
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
+    "clobber": "npx projen clobber",
     "compile": "npx projen compile",
+    "test:compile": "npx projen test:compile",
     "test": "npx projen test",
     "build": "npx projen build",
     "bump": "npx projen bump",
@@ -45,10 +46,9 @@
     "jsii-diff": "^1.16.0",
     "jsii-docgen": "^1.4.114",
     "jsii-pacmak": "^1.16.0",
-    "jsii-release": "^0.2.7",
     "json-schema": "^0.2.5",
     "pre-commit": "^1.2.2",
-    "projen": "^0.6.17",
+    "projen": "^0.16.2",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.4.4",
     "typescript": "^3.9.5"
@@ -104,8 +104,18 @@
   "license": "Apache-2.0",
   "version": "0.5.7",
   "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+    ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover",
+      "text"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
@@ -113,9 +123,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/"
     ],
-    "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+    "watchPathIgnorePatterns": [
+      "/node_modules/"
     ],
     "reporters": [
       "default",
