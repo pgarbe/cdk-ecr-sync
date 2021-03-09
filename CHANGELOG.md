@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.10](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.9...v0.5.10) (2021-03-09)
+
+
+### Bug Fixes
+
+* anti tamper check ([6e2998a](https://github.com/pgarbe/cdk-ecr-sync/commit/6e2998a5f16daae6099ddf49ebb74ab0596df024))
+
 ### [0.5.9](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.7...v0.5.9) (2021-03-09)
 
 
