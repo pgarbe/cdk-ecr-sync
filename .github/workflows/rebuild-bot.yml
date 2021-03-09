@@ -2,9 +2,6 @@
 
 name: rebuild-bot
 on:
-  issue_comment:
-    types:
-      - created
   workflow_dispatch: {}
 jobs:
   build:
@@ -47,7 +44,11 @@ jobs:
         run: npx projen build
       - name: Commit changes
         run: 'git commit -am "chore: update generated files"'
-      - name: Push changes
+      - name: Push commits
+        run: git push origin $BRANCH
+        env:
+          BRANCH: ${{ steps.query_pull_request.outputs.branch }}
+      - name: Push tags
         run: git push --follow-tags origin $BRANCH
         env:
           BRANCH: ${{ steps.query_pull_request.outputs.branch }}
