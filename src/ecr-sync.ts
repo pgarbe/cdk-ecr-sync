@@ -7,6 +7,7 @@ import * as ecr from '@aws-cdk/aws-ecr';
 import * as evt from '@aws-cdk/aws-events';
 import * as trgt from '@aws-cdk/aws-events-targets';
 import * as iam from '@aws-cdk/aws-iam';
+import * as lmbd from '@aws-cdk/aws-lambda';
 import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
 import * as s3 from '@aws-cdk/aws-s3';
@@ -73,6 +74,7 @@ export class EcrSync extends cdk.Construct {
 
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
       entry: entry,
+      runtime: lmbd.Runtime.NODEJS_12_X,
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,
       memorySize: 256,
