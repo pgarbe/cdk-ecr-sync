@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.9](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.7...v0.5.9) (2021-03-09)
+
+
+### Features
+
+* explicitly use nodejs12 runtime ([0e82d55](https://github.com/pgarbe/cdk-ecr-sync/commit/0e82d55b6bc4f60d4dc92229b4549417fbd4de28))
+
 ### [0.5.8](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.7...v0.5.8) (2021-02-06)
 
 ### [0.5.7](https://github.com/pgarbe/cdk-ecr-sync/compare/v0.5.6...v0.5.7) (2020-12-10)
