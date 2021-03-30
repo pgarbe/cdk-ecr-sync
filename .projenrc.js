@@ -19,7 +19,7 @@ const project = new AwsCdkConstructLibrary({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '1.92.0',
+  cdkVersion: '1.95.1',
   cdkDependencies: [
     '@aws-cdk/aws-cloudformation',
     '@aws-cdk/aws-codebuild',
