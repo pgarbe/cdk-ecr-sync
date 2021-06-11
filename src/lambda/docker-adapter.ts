@@ -35,6 +35,7 @@ export async function getDockerImageTags(image: string): Promise<ContainerImage[
   return amdLinuxresults.map(result => {
     return {
       tag: result.name,
+      lastUpdated: result.last_updated,
       digest: getDigestForAmd64Linux(result),
     };
   });
@@ -51,6 +52,7 @@ interface dockerTagImage {
 }
 interface dockerTag {
   name: string;
+  last_updated: string;
   images: dockerTagImage[];
 }
 interface dockerGetTagsResponse {

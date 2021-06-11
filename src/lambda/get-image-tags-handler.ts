@@ -11,6 +11,7 @@ import { getEcrImageTags } from './ecr-adapter';
 
 export interface ContainerImage {
   tag: string;
+  lastUpdated: string;
   digest?: string;
 }
 
@@ -40,7 +41,8 @@ export async function handler(): Promise<void> {
     console.debug(`Docker images for ${image.imageName}: ${dockerImageTags.map(t => `${t.tag} (${t.digest})`).join('\n')}`);
 
     let missingImageTags = await filterTags(dockerImageTags, ecrImageTags, image);
-    buildTriggerFile += await formatTriggerLines(image, missingImageTags, repoPrefix, accountId, region);
+    let orderedImageTags = await orderTags(missingImageTags);
+    buildTriggerFile += await formatTriggerLines(image, orderedImageTags, repoPrefix, accountId, region);
   }));
 
   console.info(`Images to sync:\n${buildTriggerFile}`);
@@ -49,6 +51,10 @@ export async function handler(): Promise<void> {
 
   const stream = await zipToFileStream(buildTriggerFile);
   await uploadToS3(env.BUCKET_NAME!, 'images.zip', stream);
+}
+
+export async function orderTags(imageTags: ContainerImage[]) {
+  return imageTags.sort((a, b) => a.lastUpdated.localeCompare(b.lastUpdated));
 }
 
 export async function formatTriggerLines(image: Image, missingImageTags: ContainerImage[], repoPrefix: string, accountId: string, region: string) {

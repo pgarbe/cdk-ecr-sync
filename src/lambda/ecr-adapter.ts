@@ -16,7 +16,7 @@ export async function getEcrImageTags(image: string): Promise<ContainerImage[]> 
           return false;
         }
 
-        const mapped: ContainerImage[] = data.imageIds!.map(x => { return { tag: x.imageTag!, digest: x.imageDigest! };});
+        const mapped: ContainerImage[] = data.imageIds!.map(x => { return { tag: x.imageTag!, lastUpdated: '', digest: x.imageDigest! };});
         images = [...images, ...mapped];
 
         return true;
