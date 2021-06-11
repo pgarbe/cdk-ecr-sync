@@ -10,7 +10,7 @@ const project = new AwsCdkConstructLibrary({
   keywords: ['cdk', 'ecr'],
   defaultReleaseBranch: 'main',
 
-  releaseEveryCommit: false,
+  releaseEveryCommit: true,
 
   catalog: {
     twitter: 'pgarbe',
@@ -19,7 +19,7 @@ const project = new AwsCdkConstructLibrary({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '1.95.1',
+  cdkVersion: '1.108.0',
   cdkDependencies: [
     '@aws-cdk/aws-cloudformation',
     '@aws-cdk/aws-codebuild',
