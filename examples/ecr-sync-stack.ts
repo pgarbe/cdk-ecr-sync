@@ -13,8 +13,11 @@ export class EcrSyncStack extends cdk.Stack {
         { imageName: 'datadog/agent' },
       ],
       lifcecyleRule: {
-        maxImageAge: Duration.days(365),  
+        maxImageAge: Duration.days(365),
       },
     });
   }
 }
+
+const app = new cdk.App();
+new EcrSyncStack(app, 'EcrSyncStack');
