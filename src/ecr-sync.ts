@@ -158,7 +158,7 @@ export class EcrSync extends cdk.Construct {
       // cache: cb.Cache.bucket(artifactsBucket, {prefix: 'cache/'}),
       environment: {
         privileged: true,
-        buildImage: cb.LinuxBuildImage.AMAZON_LINUX_2,
+        buildImage: cb.LinuxBuildImage.AMAZON_LINUX_2_3,
         environmentVariables: {
           AWS_ACCOUNT_ID: { value: cdk.Stack.of(this).account },
         },
