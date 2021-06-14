@@ -141,6 +141,7 @@ export class EcrSync extends cdk.Construct {
           build: {
             commands: [
               ' set -e\n \
+                cat images.csv \
                 while IFS=, read -r dockerImage ecrImage tag\n \
                 do\n \
                   echo "$dockerImage:$tag"\n \
