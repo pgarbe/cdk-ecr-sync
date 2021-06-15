@@ -59,6 +59,8 @@ export class EcrSync extends cdk.Construct {
 
     const artifactsBucket = new s3.Bucket(this, 'ArtifactBucket', {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      enforceSSL: true,
       versioned: true,
     });
 
