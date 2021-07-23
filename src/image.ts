@@ -1,3 +1,5 @@
+import * as ecr from '@aws-cdk/aws-ecr';
+
 /**
  * Properties of a EcrSync image.
  */
@@ -28,4 +30,13 @@ export interface Image {
    * @default Empty. No tags are excluded
    */
   readonly excludeTags?: string[];
+
+  /**
+   * A list of lifecycle rules to apply to this
+   * repository.
+   *
+   * If lifecycle rules are defined at the EcrSync
+   * level, this wins.
+   */
+  readonly lifecycleRules?: ecr.LifecycleRule[];
 }

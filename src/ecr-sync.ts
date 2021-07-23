@@ -28,9 +28,28 @@ export interface EcrSyncProps {
   /**
    * An ECR lifecycle rule which is applied to all repositories.
    *
+   * If both lifcecyleRule and lifcecyleRules are defined,
+   * lifecycleRules wins.
+   *
+   * If lifecycle rules are defied at the repository
+   * level, they win.
+   *
    * @default No lifecycle rules.
    */
   readonly lifcecyleRule?: ecr.LifecycleRule;
+
+  /**
+   * ECR lifecycle rules which are applied to all repositories.
+   *
+   * If both lifcecyleRule and lifcecyleRules are defined,
+   * lifecycleRules wins.
+   *
+   * If lifecycle rules are defied at the repository
+   * level, they win.
+   *
+   * @default No lifecycle rules.
+   */
+  readonly lifecycleRules?: ecr.LifecycleRule[];
 
   /**
    * A prefix for all ECR repository names.
@@ -108,7 +127,11 @@ export class EcrSync extends cdk.Construct {
         resources: [repo.repositoryArn],
       }));
 
-      if (props.lifcecyleRule !== undefined) {
+      if (element.lifecycleRules !== undefined) {
+        element.lifecycleRules.forEach(rule => repo.addLifecycleRule(rule));
+      } else if (props.lifecycleRules !== undefined) {
+        props.lifecycleRules.forEach(rule => repo.addLifecycleRule(rule));
+      } else if (props.lifcecyleRule !== undefined) {
         repo.addLifecycleRule(props.lifcecyleRule);
       }
 

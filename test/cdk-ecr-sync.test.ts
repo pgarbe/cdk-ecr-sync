@@ -1,4 +1,5 @@
 import '@aws-cdk/assert/jest';
+import { TagStatus } from '@aws-cdk/aws-ecr';
 import * as evt from '@aws-cdk/aws-events';
 import * as cdk from '@aws-cdk/core';
 import * as EcrSync from '../src/index';
@@ -130,4 +131,76 @@ test('multiple repositories', () => {
     RepositoryName: 'amazonlinux',
   });
 
+});
+
+test('multiple lifecycle rules', () => {
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'TestStack');
+
+  // WHEN
+  new EcrSync.EcrSync(stack, 'ecrSync', {
+    dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }],
+    lifcecyleRule: { // This should be overridden by lifecycleRules below
+      maxImageAge: cdk.Duration.days(365),
+    },
+    lifecycleRules: [
+      {
+        maxImageCount: 5,
+        tagStatus: TagStatus.TAGGED,
+        tagPrefixList: [
+          'v7',
+        ],
+      },
+      {
+        maxImageCount: 10,
+        tagStatus: TagStatus.UNTAGGED,
+      },
+    ],
+  });
+
+  expect(stack).toHaveResourceLike('AWS::ECR::Repository', {
+    LifecyclePolicy: {
+      LifecyclePolicyText: '{"rules":[{"rulePriority":1,"selection":{"tagStatus":"tagged","tagPrefixList":["v7"],"countType":"imageCountMoreThan","countNumber":5},"action":{"type":"expire"}},{"rulePriority":2,"selection":{"tagStatus":"untagged","countType":"imageCountMoreThan","countNumber":10},"action":{"type":"expire"}}]}',
+    },
+  });
+});
+
+test('per-repository lifecycle rules', () => {
+  const app = new cdk.App();
+  const stack = new cdk.Stack(app, 'TestStack');
+
+  // WHEN
+  new EcrSync.EcrSync(stack, 'ecrSync', {
+    dockerImages: [{
+      imageName: 'foo/bar',
+      excludeTags: ['latest'],
+      lifecycleRules: [ // This should override all the rules below
+        {
+          maxImageAge: cdk.Duration.days(180),
+        },
+      ],
+    }],
+    lifcecyleRule: {
+      maxImageAge: cdk.Duration.days(365),
+    },
+    lifecycleRules: [
+      {
+        maxImageCount: 5,
+        tagStatus: TagStatus.TAGGED,
+        tagPrefixList: [
+          'v7',
+        ],
+      },
+      {
+        maxImageCount: 10,
+        tagStatus: TagStatus.UNTAGGED,
+      },
+    ],
+  });
+
+  expect(stack).toHaveResourceLike('AWS::ECR::Repository', {
+    LifecyclePolicy: {
+      LifecyclePolicyText: '{"rules":[{"rulePriority":1,"selection":{"tagStatus":"any","countType":"sinceImagePushed","countNumber":180,"countUnit":"days"},"action":{"type":"expire"}}]}',
+    },
+  });
 });
