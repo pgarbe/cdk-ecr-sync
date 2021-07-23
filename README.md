@@ -18,9 +18,9 @@ In your CDK application, run `npm install @pgarbe/cdk-ecr-sync` and add the foll
 
 ```typescript
 const ecrSync = new EcrSync(this, 'ecrSync', {
+  repoPrefix: 'dockerhub-mirror', // optional prefix
   dockerImages: [
     {
-      repoPrefix: 'dockerhub-mirror', // optional prefix
       imageName: 'datadog/agent',
       excludeTags: [  // Use RegEx expressions to exclude specific tags
         'latest',
