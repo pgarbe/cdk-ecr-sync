@@ -45,6 +45,14 @@ export interface EcrSyncProps {
    * @default is once a day.
    */
   readonly schedule?: evt.Schedule;
+  
+  /**
+   * Optional. Bash script injection for the docker image processing phase,
+   * in order to log in to Dockerhub or do other initialization.
+   *
+   * @default Empty.
+   */
+  readonly initScript?: string;
 }
 
 /**
@@ -142,7 +150,8 @@ export class EcrSync extends cdk.Construct {
           },
           build: {
             commands: [
-              ' set -e\n \
+              ` set -e\n \
+                ${props.initScript || ''}\n \
                 cat images.csv\n \
                 while IFS=, read -r dockerImage ecrImage tag\n \
                 do\n \
@@ -151,7 +160,7 @@ export class EcrSync extends cdk.Construct {
                   docker tag $dockerImage:$tag $ecrImage:$tag\n \
                   aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com\n \
                   docker push $ecrImage:$tag\n \
-                done < images.csv\n',
+                done < images.csv\n`,
             ],
           },
         },
