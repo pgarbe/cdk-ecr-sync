@@ -36,6 +36,7 @@ new EcrSync(scope: Construct, id: string, props: EcrSyncProps)
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[EcrSyncProps](#pgarbe-cdk-ecr-sync-ecrsyncprops)</code>)  *No description*
   * **dockerImages** (<code>Array<[Image](#pgarbe-cdk-ecr-sync-image)></code>)  Images from Docker Hub that should be pulled into ECR. 
+  * **initScript** (<code>string</code>)  Optional. __*Default*__: Empty.
   * **lifcecyleRule** (<code>[LifecycleRule](#aws-cdk-aws-ecr-lifecyclerule)</code>)  An ECR lifecycle rule which is applied to all repositories. __*Default*__: No lifecycle rules.
   * **repoPrefix** (<code>string</code>)  A prefix for all ECR repository names. __*Default*__: Empty.
   * **schedule** (<code>[Schedule](#aws-cdk-aws-events-schedule)</code>)  Optional. __*Default*__: is once a day.
@@ -69,6 +70,7 @@ Properties for EcrSync.
 Name | Type | Description 
 -----|------|-------------
 **dockerImages** | <code>Array<[Image](#pgarbe-cdk-ecr-sync-image)></code> | Images from Docker Hub that should be pulled into ECR.
+**initScript**? | <code>string</code> | Optional.<br/>__*Default*__: Empty.
 **lifcecyleRule**? | <code>[LifecycleRule](#aws-cdk-aws-ecr-lifecyclerule)</code> | An ECR lifecycle rule which is applied to all repositories.<br/>__*Default*__: No lifecycle rules.
 **repoPrefix**? | <code>string</code> | A prefix for all ECR repository names.<br/>__*Default*__: Empty.
 **schedule**? | <code>[Schedule](#aws-cdk-aws-events-schedule)</code> | Optional.<br/>__*Default*__: is once a day.
