@@ -20,8 +20,8 @@ Name|Description
 
 Construct to sync Docker images from DockerHub into ECR Repos.
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable)
-__Extends__: [Construct](#aws-cdk-core-construct)
+__Implements__: [IConstruct](#constructs-iconstruct), [IDependable](#constructs-idependable)
+__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -32,14 +32,14 @@ __Extends__: [Construct](#aws-cdk-core-construct)
 new EcrSync(scope: Construct, id: string, props: EcrSyncProps)
 ```
 
-* **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
+* **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[EcrSyncProps](#pgarbe-cdk-ecr-sync-ecrsyncprops)</code>)  *No description*
   * **dockerImages** (<code>Array<[Image](#pgarbe-cdk-ecr-sync-image)></code>)  Images from Docker Hub that should be pulled into ECR. 
   * **initScript** (<code>string</code>)  Optional. __*Default*__: Empty.
-  * **lifcecyleRule** (<code>[LifecycleRule](#aws-cdk-aws-ecr-lifecyclerule)</code>)  An ECR lifecycle rule which is applied to all repositories. __*Default*__: No lifecycle rules.
+  * **lifcecyleRule** (<code>[aws_ecr.LifecycleRule](#aws-cdk-lib-aws-ecr-lifecyclerule)</code>)  An ECR lifecycle rule which is applied to all repositories. __*Default*__: No lifecycle rules.
   * **repoPrefix** (<code>string</code>)  A prefix for all ECR repository names. __*Default*__: Empty.
-  * **schedule** (<code>[Schedule](#aws-cdk-aws-events-schedule)</code>)  Optional. __*Default*__: is once a day.
+  * **schedule** (<code>[aws_events.Schedule](#aws-cdk-lib-aws-events-schedule)</code>)  Optional. __*Default*__: is once a day.
 
 
 ### Methods
@@ -53,7 +53,7 @@ Grant the given identity permissions to use the images in this repository.
 grantPull(grantee: IGrantable): void
 ```
 
-* **grantee** (<code>[IGrantable](#aws-cdk-aws-iam-igrantable)</code>)  *No description*
+* **grantee** (<code>[aws_iam.IGrantable](#aws-cdk-lib-aws-iam-igrantable)</code>)  *No description*
 
 
 
@@ -71,9 +71,9 @@ Name | Type | Description
 -----|------|-------------
 **dockerImages** | <code>Array<[Image](#pgarbe-cdk-ecr-sync-image)></code> | Images from Docker Hub that should be pulled into ECR.
 **initScript**? | <code>string</code> | Optional.<br/>__*Default*__: Empty.
-**lifcecyleRule**? | <code>[LifecycleRule](#aws-cdk-aws-ecr-lifecyclerule)</code> | An ECR lifecycle rule which is applied to all repositories.<br/>__*Default*__: No lifecycle rules.
+**lifcecyleRule**? | <code>[aws_ecr.LifecycleRule](#aws-cdk-lib-aws-ecr-lifecyclerule)</code> | An ECR lifecycle rule which is applied to all repositories.<br/>__*Default*__: No lifecycle rules.
 **repoPrefix**? | <code>string</code> | A prefix for all ECR repository names.<br/>__*Default*__: Empty.
-**schedule**? | <code>[Schedule](#aws-cdk-aws-events-schedule)</code> | Optional.<br/>__*Default*__: is once a day.
+**schedule**? | <code>[aws_events.Schedule](#aws-cdk-lib-aws-events-schedule)</code> | Optional.<br/>__*Default*__: is once a day.
 
 
 

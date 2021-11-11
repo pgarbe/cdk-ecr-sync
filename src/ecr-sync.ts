@@ -1,17 +1,19 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as cb from '@aws-cdk/aws-codebuild';
-import * as cp from '@aws-cdk/aws-codepipeline';
-import * as cpa from '@aws-cdk/aws-codepipeline-actions';
-import * as ecr from '@aws-cdk/aws-ecr';
-import * as evt from '@aws-cdk/aws-events';
-import * as trgt from '@aws-cdk/aws-events-targets';
-import * as iam from '@aws-cdk/aws-iam';
-import * as lmbd from '@aws-cdk/aws-lambda';
-import * as lnjs from '@aws-cdk/aws-lambda-nodejs';
-import * as logs from '@aws-cdk/aws-logs';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as cb from 'aws-cdk-lib/aws-codebuild';
+import * as cp from 'aws-cdk-lib/aws-codepipeline';
+import * as cpa from 'aws-cdk-lib/aws-codepipeline-actions';
+import * as ecr from 'aws-cdk-lib/aws-ecr';
+import * as evt from 'aws-cdk-lib/aws-events';
+import * as trgt from 'aws-cdk-lib/aws-events-targets';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import * as lmbd from 'aws-cdk-lib/aws-lambda';
+import * as lnjs from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as logs from 'aws-cdk-lib/aws-logs';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import { Construct } from 'constructs';
+
 import { Image } from './image';
 
 /**
@@ -58,11 +60,11 @@ export interface EcrSyncProps {
 /**
  * Construct to sync Docker images from DockerHub into ECR Repos.
  */
-export class EcrSync extends cdk.Construct {
+export class EcrSync extends Construct {
 
   private ecrRepos: ecr.Repository[] = new Array;
 
-  constructor(scope: cdk.Construct, id: string, props: EcrSyncProps) {
+  constructor(scope: Construct, id: string, props: EcrSyncProps) {
     super(scope, id);
 
     const artifactsBucket = new s3.Bucket(this, 'ArtifactBucket', {

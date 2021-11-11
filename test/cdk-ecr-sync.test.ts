@@ -1,6 +1,6 @@
-import '@aws-cdk/assert/jest';
-import * as evt from '@aws-cdk/aws-events';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import { Template } from 'aws-cdk-lib/assertions';
+import * as evt from 'aws-cdk-lib/aws-events';
 import * as EcrSync from '../src/index';
 
 test('Defaults are correctly set', () => {
@@ -12,17 +12,19 @@ test('Defaults are correctly set', () => {
 
   // THEN
   // Repository is created
-  expect(stack).toHaveResource('AWS::ECR::Repository', {
+  const template = Template.fromStack(stack);
+
+  template.hasResourceProperties('AWS::ECR::Repository', {
     RepositoryName: 'foo/bar',
   });
 
   // Rule is set
-  expect(stack).toHaveResource('AWS::Events::Rule', {
+  template.hasResourceProperties('AWS::Events::Rule', {
     ScheduleExpression: 'rate(1 day)',
   });
 
   // includeLatest is not set
-  expect(stack).toHaveResourceLike('AWS::Lambda::Function', {
+  template.hasResourceProperties('AWS::Lambda::Function', {
     Environment: {
       Variables: {
         AWS_ACCOUNT_ID: {
@@ -48,7 +50,8 @@ test('excludeTags is included when it is set to true', () => {
   new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }] });
 
   // THEN
-  expect(stack).toHaveResourceLike('AWS::Lambda::Function', {
+  const template = Template.fromStack(stack);
+  template.hasResourceProperties('AWS::Lambda::Function', {
     Environment: {
       Variables: {
         AWS_ACCOUNT_ID: {
@@ -75,10 +78,11 @@ test('Reponame prefix is set when available', () => {
   new EcrSync.EcrSync(stack, 'MyTestConstruct', { repoPrefix: 'myprefix', dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }] });
 
   // THEN
-  expect(stack).toHaveResourceLike('AWS::ECR::Repository', {
+  const template = Template.fromStack(stack);
+  template.hasResourceProperties('AWS::ECR::Repository', {
     RepositoryName: 'myprefix/foo/bar',
   });
-  expect(stack).toHaveResourceLike('AWS::Lambda::Function', {
+  template.hasResourceProperties('AWS::Lambda::Function', {
     Environment: {
       Variables: {
         REPO_PREFIX: 'myprefix',
@@ -95,7 +99,8 @@ test('Reponame is used from image name', () => {
   new EcrSync.EcrSync(stack, 'MyTestConstruct', { dockerImages: [{ imageName: 'foo/bar', excludeTags: ['latest'] }] });
 
   // THEN
-  expect(stack).toHaveResourceLike('AWS::ECR::Repository', {
+  const template = Template.fromStack(stack);
+  template.hasResourceProperties('AWS::ECR::Repository', {
     RepositoryName: 'foo/bar',
   });
 });
@@ -126,7 +131,8 @@ test('multiple repositories', () => {
     },
   });
 
-  expect(stack).toHaveResourceLike('AWS::ECR::Repository', {
+  const template = Template.fromStack(stack);
+  template.hasResourceProperties('AWS::ECR::Repository', {
     RepositoryName: 'amazonlinux',
   });
 

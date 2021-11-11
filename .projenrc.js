@@ -20,29 +20,14 @@ const project = new AwsCdkConstructLibrary({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '1.129.0',
-  cdkDependencies: [
-    '@aws-cdk/aws-cloudformation',
-    '@aws-cdk/aws-codebuild',
-    '@aws-cdk/aws-codepipeline',
-    '@aws-cdk/aws-codepipeline-actions',
-    '@aws-cdk/aws-ecr',
-    '@aws-cdk/aws-ecs',
-    '@aws-cdk/aws-events',
-    '@aws-cdk/aws-events-targets',
-    '@aws-cdk/aws-iam',
-    '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-nodejs',
-    '@aws-cdk/aws-logs',
-    '@aws-cdk/aws-s3',
-    '@aws-cdk/aws-ssm',
-    '@aws-cdk/core',
-    '@aws-cdk/custom-resources',
-  ],
-  devDeps: ['esbuild', 'pre-commit'],
+  cdkVersion: '2.0.0-rc.29',
+
+  cdkDependencies: ['aws-cdk-lib'],
+  devDeps: ['constructs', 'esbuild', 'pre-commit', 'aws-cdk-lib@2.0.0-rc.29'],
   deps: ['aws-sdk', 'jszip'],
   bundledDeps: ['aws-sdk', 'jszip'],
 
+  antitamper: true,
   // jsii publishing
 
   // java: {
