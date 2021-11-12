@@ -9,7 +9,7 @@ const project = new AwsCdkConstructLibrary({
   repository: 'https://github.com/pgarbe/cdk-ecr-sync.git',
   keywords: ['cdk', 'ecr'],
   defaultReleaseBranch: 'main',
-  minNodeVersion: '14.5.0',
+  minNodeVersion: '14.15.0',
 
   releaseEveryCommit: true,
 
