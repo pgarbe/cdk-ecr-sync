@@ -11,7 +11,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   author: 'Philipp Garbe',
   authorAddress: 'https://github.com/pgarbe',
 
-  minNodeVersion: '14.15.0',
+  minNodeVersion: '14.17.0',
   projenrcTs: true,
 
   releaseEveryCommit: true,
