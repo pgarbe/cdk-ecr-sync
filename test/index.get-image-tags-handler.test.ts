@@ -1,7 +1,7 @@
 import { Image } from '../src/image';
 import * as handler from '../src/lambda/get-image-tags-handler';
 
-test('Only included tags', async (done) => {
+test('Only included tags', async () => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', lastUpdated: '', digest: '' }, { tag: '1.5', lastUpdated: '', digest: '' }, { tag: '2.0', lastUpdated: '', digest: '' }, { tag: 'latest', lastUpdated: '', digest: '' }];
@@ -14,11 +14,9 @@ test('Only included tags', async (done) => {
   expect(tags.length).toBe(2);
   expect(tags[0].tag).toBe('1.0.0');
   expect(tags[1].tag).toBe('1.5');
-
-  done();
 });
 
-test('Exclude wins over include', async (done) => {
+test('Exclude wins over include', async () => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', lastUpdated: '', digest: '' }, { tag: '1.5', lastUpdated: '', digest: '' }, { tag: '2.0', lastUpdated: '', digest: '' }, { tag: 'latest', lastUpdated: '', digest: '' }];
@@ -31,11 +29,9 @@ test('Exclude wins over include', async (done) => {
   // THEN
   expect(tags.length).toBe(1);
   expect(tags[0].tag).toBe('1.0.0');
-
-  done();
 });
 
-test('Only excluded tags', async (done) => {
+test('Only excluded tags', async () => {
 
   // WHEN
   const dockerImageTags = [
@@ -54,11 +50,9 @@ test('Only excluded tags', async (done) => {
   // THEN
   expect(tags.length).toBe(1);
   expect(tags[0].tag).toBe('4.2.10');
-
-  done();
 });
 
-test('No include and no exclude returns all', async (done) => {
+test('No include and no exclude returns all', async () => {
 
   // WHEN
   const dockerImageTags = [
@@ -76,11 +70,9 @@ test('No include and no exclude returns all', async (done) => {
 
   // THEN
   expect(tags.length).toBe(6);
-
-  done();
 });
 
-test('Images missing in ECR are added', async (done) => {
+test('Images missing in ECR are added', async () => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', lastUpdated: '', digest: '' }, { tag: '1.5', lastUpdated: '', digest: '' }, { tag: '2.0', lastUpdated: '', digest: '' }, { tag: 'latest', lastUpdated: '', digest: '' }];
@@ -95,11 +87,9 @@ test('Images missing in ECR are added', async (done) => {
   expect(tags[0].tag).toBe('1.5');
   expect(tags[1].tag).toBe('2.0');
   expect(tags[2].tag).toBe('latest');
-
-  done();
 });
 
-test('Additional images in ECR are ignored', async (done) => {
+test('Additional images in ECR are ignored', async () => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', lastUpdated: '', digest: '' }, { tag: '1.5', lastUpdated: '', digest: '' }, { tag: '2.0', lastUpdated: '', digest: '' }, { tag: 'latest', lastUpdated: '', digest: '' }];
@@ -114,11 +104,9 @@ test('Additional images in ECR are ignored', async (done) => {
   expect(tags[0].tag).toBe('1.5');
   expect(tags[1].tag).toBe('2.0');
   expect(tags[2].tag).toBe('latest');
-
-  done();
 });
 
-test('Existing tags with same digest are ignored', async (done) => {
+test('Existing tags with same digest are ignored', async () => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', lastUpdated: '', digest: 'sha256:655ed9c3ae' }, { tag: '1.5', lastUpdated: '', digest: 'sha256:b6b46bdc15' }];
@@ -129,11 +117,9 @@ test('Existing tags with same digest are ignored', async (done) => {
 
   // THEN
   expect(tags.length).toBe(0);
-
-  done();
 });
 
-test('Existing tags with different digest are synced', async (done) => {
+test('Existing tags with different digest are synced', async () => {
 
   // WHEN
   const dockerImageTags = [{ tag: '1.0.0', lastUpdated: '', digest: 'sha256:655ed9c3ae' }, { tag: '1.5', lastUpdated: '', digest: 'sha256:be7c1d95ac' }];
@@ -145,11 +131,9 @@ test('Existing tags with different digest are synced', async (done) => {
   // THEN
   expect(tags.length).toBe(1);
   expect(tags[0].tag).toBe('1.5');
-
-  done();
 });
 
-test('Format without prefix', async (done) => {
+test('Format without prefix', async () => {
 
   // WHEN
   const missingTags = [{ tag: '1.0.0', lastUpdated: '', digest: 'sha256:655ed9c3ae' }];
@@ -159,11 +143,9 @@ test('Format without prefix', async (done) => {
 
   // THEN
   expect(triggerFile).toStrictEqual('myImage,123456789012.dkr.ecr.eu-west-1.amazonaws.com/myImage,1.0.0\n');
-
-  done();
 });
 
-test('Format with prefix', async (done) => {
+test('Format with prefix', async () => {
 
   // WHEN
   const missingTags = [{ tag: '1.0.0', lastUpdated: '', digest: 'sha256:655ed9c3ae' }];
@@ -173,11 +155,9 @@ test('Format with prefix', async (done) => {
 
   // THEN
   expect(triggerFile).toStrictEqual('myImage,123456789012.dkr.ecr.eu-west-1.amazonaws.com/myPrefix/myImage,1.0.0\n');
-
-  done();
 });
 
-test('Should sort images in ascending time order', async (done) => {
+test('Should sort images in ascending time order', async () => {
 
   // GIVEN
   const dockerImageTags = [
@@ -196,6 +176,4 @@ test('Should sort images in ascending time order', async (done) => {
   expect(tags[1].lastUpdated).toBe('2021-05-09T10:10:10.000000Z');
   expect(tags[2].lastUpdated).toBe('2021-05-10T10:10:10.000000Z');
   expect(tags[3].lastUpdated).toBe('2021-05-25T10:10:10.000000Z');
-
-  done();
 });

@@ -1,15 +1,18 @@
-const { AwsCdkConstructLibrary } = require('projen');
+import * as pj from 'projen';
 
-const project = new AwsCdkConstructLibrary({
+const project = new pj.awscdk.AwsCdkConstructLibrary({
   name: '@pgarbe/cdk-ecr-sync',
-  description:
-    'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
-  authorName: 'Philipp Garbe',
-  authorUrl: 'https://garbe.io',
-  repository: 'https://github.com/pgarbe/cdk-ecr-sync.git',
+  repositoryUrl: 'https://github.com/pgarbe/cdk-ecr-sync.git',
   keywords: ['cdk', 'ecr'],
   defaultReleaseBranch: 'main',
+  description:
+    'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
+
+  author: 'Philipp Garbe',
+  authorAddress: 'https://github.com/pgarbe',
+
   minNodeVersion: '14.15.0',
+  projenrcTs: true,
 
   releaseEveryCommit: true,
 
@@ -20,10 +23,12 @@ const project = new AwsCdkConstructLibrary({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '2.0.0-rc.29',
+  cdkVersion: '2.0.0',
+  cdkVersionPinning: true,
+  cdkDependenciesAsDeps: false,
 
   cdkDependencies: ['aws-cdk-lib'],
-  devDeps: ['constructs', 'esbuild', 'pre-commit', 'aws-cdk-lib@2.0.0-rc.29'],
+  devDeps: ['constructs', 'esbuild', 'pre-commit'],
   deps: ['aws-sdk', 'jszip'],
   bundledDeps: ['aws-sdk', 'jszip'],
 
@@ -42,5 +47,5 @@ const project = new AwsCdkConstructLibrary({
 });
 
 project.gitignore.exclude('cdk.out');
-project.npmignore.exclude('examples');
+project.npmignore!.exclude('examples');
 project.synth();
