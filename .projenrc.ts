@@ -25,9 +25,9 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
 
   cdkVersion: '2.0.0',
   cdkVersionPinning: true,
-  cdkDependenciesAsDeps: false,
+  // cdkDependenciesAsDeps: false,
 
-  cdkDependencies: ['aws-cdk-lib'],
+  // cdkDependencies: ['aws-cdk-lib'],
   devDeps: ['constructs', 'esbuild', 'pre-commit'],
   deps: ['aws-sdk', 'jszip'],
   bundledDeps: ['aws-sdk', 'jszip'],
