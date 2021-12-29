@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
@@ -42,8 +43,6 @@ jobs:
         with:
           name: dist
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim-node14
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -52,6 +51,9 @@ jobs:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -75,16 +77,27 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
+      - name: Create js artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
