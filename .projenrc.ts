@@ -32,7 +32,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   deps: ['aws-sdk', 'jszip'],
   bundledDeps: ['aws-sdk', 'jszip'],
 
-  antitamper: true,
+  // antitamper: true,
   // jsii publishing
 
   // java: {
