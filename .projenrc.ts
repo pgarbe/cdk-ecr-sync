@@ -23,7 +23,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '2.0.0',
+  cdkVersion: '2.12.0',
   cdkVersionPinning: true,
   // cdkDependenciesAsDeps: false,
 
