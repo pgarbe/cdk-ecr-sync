@@ -43,6 +43,11 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   // }
 });
 
+// Fix issue with prettier (https://github.com/DefinitelyTyped/DefinitelyTyped/discussions/60310)
+project.package.addField('resolutions', {
+  '@types/prettier': '2.6.0',
+});
+
 project.gitignore.exclude('cdk.out');
 project.npmignore!.exclude('examples');
 project.synth();
