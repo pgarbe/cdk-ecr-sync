@@ -2,6 +2,7 @@
   "dependencies": [
     {
       "name": "@types/jest",
+      "version": "^27",
       "type": "build"
     },
     {
@@ -82,7 +83,7 @@
     },
     {
       "name": "npm-check-updates",
-      "version": "^12",
+      "version": "^15",
       "type": "build"
     },
     {
@@ -118,6 +119,21 @@
     {
       "name": "jszip",
       "type": "bundled"
+    },
+    {
+      "name": "@types/prettier",
+      "version": "2.6.0",
+      "type": "override"
+    },
+    {
+      "name": "@types/responselike",
+      "version": "1.0.0",
+      "type": "override"
+    },
+    {
+      "name": "got",
+      "version": "12.3.1",
+      "type": "override"
     },
     {
       "name": "aws-cdk-lib",
