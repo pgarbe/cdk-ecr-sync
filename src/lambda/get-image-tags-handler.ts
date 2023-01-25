@@ -5,9 +5,9 @@ import { Stream, PassThrough } from 'stream';
 import * as aws from 'aws-sdk';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
-import { Image } from '../image';
 import { getDockerImageTags } from './docker-adapter';
 import { getEcrImageTags } from './ecr-adapter';
+import { Image } from '../image';
 
 export interface ContainerImage {
   tag: string;
