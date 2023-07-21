@@ -86,7 +86,7 @@ export class EcrSync extends Construct {
 
     const lambda = new lnjs.NodejsFunction(this, 'lambda', {
       entry: entry,
-      runtime: lmbd.Runtime.NODEJS_12_X,
+      runtime: lmbd.Runtime.NODEJS_18_X,
       timeout: cdk.Duration.minutes(10),
       logRetention: logs.RetentionDays.ONE_WEEK,
       memorySize: 256,

@@ -1,9 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { env } from 'process';
 import { Stream, PassThrough } from 'stream';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import * as aws from 'aws-sdk';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
 import { getDockerImageTags } from './docker-adapter';
 import { getEcrImageTags } from './ecr-adapter';
