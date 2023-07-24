@@ -14,6 +14,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   projenrcTs: true,
 
   releaseEveryCommit: true,
+  enablePRAutoMerge: true,
 
   catalog: {
     twitter: 'pgarbe',
