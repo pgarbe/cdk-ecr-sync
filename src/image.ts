@@ -2,7 +2,6 @@
  * Properties of a EcrSync image.
  */
 export interface Image {
-
   /**
    * The name of the image that should be proxied by ECR
    *
@@ -28,4 +27,12 @@ export interface Image {
    * @default Empty. No tags are excluded
    */
   readonly excludeTags?: string[];
+  /**
+   * @default false. Arm64 architecture is not excluded
+   */
+  readonly excludeArm64Arch?: boolean;
+  /**
+   * @default false. AMD64 architecture is not excluded
+   */
+  readonly excludeAmd64Arch?: boolean;
 }
