@@ -747,17 +747,10 @@
     chalk "^4.1.2"
     semver "^7.5.4"
 
-"@jsii/spec@1.94.0", "@jsii/spec@^1.89.0", "@jsii/spec@^1.93.0", "@jsii/spec@^1.94.0":
+"@jsii/spec@1.94.0", "@jsii/spec@^1.88.0", "@jsii/spec@^1.89.0", "@jsii/spec@^1.93.0", "@jsii/spec@^1.94.0":
   version "1.94.0"
   resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.94.0.tgz#a4584179cd83e50110169a3f5ec1b6ab4ad362f4"
   integrity sha512-ur1aUMPsdZgflUIZC4feyJzrkGYzvtiIJxRowkSxr7Ip/sLCKvi61dvImWtJY9ZhEAl7Kiq7I/R32WVyxW0JrQ==
-  dependencies:
-    ajv "^8.12.0"
-
-"@jsii/spec@^1.88.0":
-  version "1.93.0"
-  resolved "https://registry.yarnpkg.com/@jsii/spec/-/spec-1.93.0.tgz#e56c5971efbd349592de86081b3cbfd04fc0bb77"
-  integrity sha512-PIXcTHUsFOoxSE7KMpJ3iJ3iYGSo2x46ZX4bHDDD6C7M3ij+7Z3Ujumg/OsIrESCHKWXGXlgl9EmkNJraeYkRQ==
   dependencies:
     ajv "^8.12.0"
 
@@ -3845,9 +3838,9 @@ jsii-rosetta@^1.94.0:
     yargs "^16.2.0"
 
 jsii-rosetta@~5.0.0:
-  version "5.0.30"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.0.30.tgz#5d207d2b34e81104aa2c88fbade2eb7e53040b62"
-  integrity sha512-cc4WPSbBl3MeqxykJPm7aswFsc+BtwFyjdsWnjqKcbmF3Y+Ut8iOaDartv8S6ghX1d5TsvCiA3P1Lhndmmwfeg==
+  version "5.0.33"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.0.33.tgz#d0ea080f81bbc75672fa6a19ade0a9427cabc958"
+  integrity sha512-NwnFTNGhLUPowhLTDMRw7OCDdHOJ0lCEBYGbO+eW9PUaDqMYdHctKw8icFPwViMS9WMFA23YmXFbqzci24F/xA==
   dependencies:
     "@jsii/check-node" "1.93.0"
     "@jsii/spec" "^1.93.0"
@@ -5087,12 +5080,7 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.17.tgz#887da8aa73218e51a1d917502d79863161a93f9c"
   integrity sha512-sh8PWc/ftMqAAdFiBu6Fy6JUOYjqDJBJvIhpfDMyHrr0Rbp5liZqd4TjtQ/RgfLjKFZb+LMx5hpml5qOWy0qvg==
 
-spdx-license-list@^6.6.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/spdx-license-list/-/spdx-license-list-6.8.0.tgz#92a99cd6c8b97fe98ae83c54deaffd4d9d503f74"
-  integrity sha512-5UdM7r9yJ1EvsPQZWfa41AZjLQngl9iMMysm9XBW7Lqhq7aF8cllfqjS+rFCHB8FFMGSM0yFWue2LUV9mR0QzQ==
-
-spdx-license-list@^6.8.0:
+spdx-license-list@^6.6.0, spdx-license-list@^6.8.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/spdx-license-list/-/spdx-license-list-6.9.0.tgz#5543abb3a15f985a12808f642a622d2721c372ad"
   integrity sha512-L2jl5vc2j6jxWcNCvcVj/BW9A8yGIG02Dw+IUw0ZxDM70f7Ylf5Hq39appV1BI9yxyWQRpq2TQ1qaXvf+yjkqA==
@@ -5559,9 +5547,9 @@ typescript@^5.3.3:
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
 
 typescript@next:
-  version "5.4.0-dev.20231228"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.0-dev.20231228.tgz#2f6dd1281bda0f7ba67944651e4ed501bd70ef06"
-  integrity sha512-LRdJTPnj+MTmEI+AYsKHdpxa2FhmBP8NbEDu0sQC8pYOggvnbg0W5idoFkJz5Y4TXLRPRbAgqemoJOCuwxLaBQ==
+  version "5.5.0-dev.20240304"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.0-dev.20240304.tgz#7a8cfedc320a774874bf975ecc76b2a390c5c2ad"
+  integrity sha512-nu7H0CgsNe6Q9dJLsRRKB4E7KNBHuhJVJtC6vwC0GNnunJLGh8ZGtEZzcFx+feNnpAC/TWLs/H5EAea1wruBUg==
 
 typescript@~3.9.10:
   version "3.9.10"
