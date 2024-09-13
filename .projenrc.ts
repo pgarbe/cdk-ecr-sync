@@ -5,8 +5,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   repositoryUrl: 'https://github.com/pgarbe/cdk-ecr-sync.git',
   keywords: ['cdk', 'ecr'],
   defaultReleaseBranch: 'main',
-  description:
-    'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
+  description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
 
   author: 'Philipp Garbe',
   authorAddress: 'https://github.com/pgarbe',
@@ -20,7 +19,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   },
 
   cdkVersion: '2.86.0',
-  jsiiVersion: '~5.0.0',
+  jsiiVersion: '~5.5.x',
 
   // cdkVersionPinning: true,
   // cdkDependenciesAsDeps: false,

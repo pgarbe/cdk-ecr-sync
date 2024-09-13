@@ -25,3 +25,4 @@ tsconfig.tsbuildinfo
 examples
 /.gitattributes
 /.projenrc.ts
+/projenrc
