@@ -20,6 +20,7 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
 
   cdkVersion: '2.86.0',
   jsiiVersion: '~5.5.x',
+  nodeVersion: '20.x',
 
   // cdkVersionPinning: true,
   // cdkDependenciesAsDeps: false,
