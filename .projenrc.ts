@@ -13,14 +13,10 @@ const project = new pj.awscdk.AwsCdkConstructLibrary({
   projenrcTs: true,
 
   releaseTrigger: pj.release.ReleaseTrigger.continuous(),
-
-  catalog: {
-    twitter: 'pgarbe',
-  },
+  npmTrustedPublishing: true,
 
   cdkVersion: '2.86.0',
-  jsiiVersion: '~5.5.x',
-
+  jsiiVersion: '~5.9.0',
 
   // cdkVersionPinning: true,
   // cdkDependenciesAsDeps: false,
