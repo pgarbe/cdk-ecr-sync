@@ -1,10 +1,37 @@
-import { NodePackage } from "projen";
+import * as pj from 'projen';
 
-const project = new NodePackage({
-  name: "cdk-ecr-sync",
-  defaultReleaseBranch: "main",
-  nodeVersion: "20.x", // Set Node.js to the new 20.x version
-  // other configurations...
+const project = new pj.awscdk.AwsCdkConstructLibrary({
+  name: '@pgarbe/cdk-ecr-sync',
+  repositoryUrl: 'https://github.com/pgarbe/cdk-ecr-sync.git',
+  keywords: ['cdk', 'ecr'],
+  defaultReleaseBranch: 'main',
+  description: 'An CDK Construct to synchronizes Docker images from Docker Hub to ECR.',
+
+  author: 'Philipp Garbe',
+  authorAddress: 'https://github.com/pgarbe',
+
+  projenrcTs: true,
+
+  releaseTrigger: pj.release.ReleaseTrigger.continuous(),
+
+  catalog: {
+    twitter: 'pgarbe',
+  },
+
+  cdkVersion: '2.86.0',
+  jsiiVersion: '~5.5.x',
+
+
+  // cdkVersionPinning: true,
+  // cdkDependenciesAsDeps: false,
+
+  // cdkDependencies: ['aws-cdk-lib'],
+  devDeps: ['constructs', 'esbuild', 'pre-commit'],
+  deps: ['aws-sdk', 'jszip'],
+  bundledDeps: ['aws-sdk', 'jszip'],
 });
 
+
+project.gitignore.exclude('cdk.out');
+project.npmignore!.exclude('examples');
 project.synth();
